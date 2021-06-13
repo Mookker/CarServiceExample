@@ -1,4 +1,4 @@
-# GraphQLTest
+# Car Service
 This repository contains example projects to demonstrate next architectures/approaches/concepts:
 1. [GrapQL](https://github.com/graphql-dotnet/examples)
 2. [CQRS using mediator](https://github.com/jbogard/MediatR)

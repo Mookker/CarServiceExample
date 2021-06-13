@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="GraphQL" Version="4.5.0" />
+        <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.0.2" />
+        <PackageReference Include="GraphQL.Server.Ui.Playground" Version="5.0.2" />
+        <PackageReference Include="MediatR" Version="9.0.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CarService.AppCore\CarService.AppCore.csproj" />
+      <ProjectReference Include="..\CarService.Cqrs\CarService.Cqrs.csproj" />
+      <ProjectReference Include="..\CarService.Domain\CarService.Domain.csproj" />
+      <ProjectReference Include="..\CarService.Infrastructure.MongoDb\CarService.Infrastructure.MongoDb.csproj" />
+    </ItemGroup>
+
+</Project>

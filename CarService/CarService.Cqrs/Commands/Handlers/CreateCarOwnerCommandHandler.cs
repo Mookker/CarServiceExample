@@ -1,12 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CarService.AppCore.Interfaces;
-using CarService.AppCore.Models;
 using CarService.AppCore.Models.Requests;
 using CarService.Domain.Models;
 using MediatR;
 
-namespace CarService.Cqrs.Commands.Handlers.Handlers
+namespace CarService.Cqrs.Commands.Handlers
 {
     public class CreateCarOwnerCommandHandler: IRequestHandler<CreateCarOwnerCommand, CarOwner>
     {

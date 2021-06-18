@@ -27,7 +27,9 @@ namespace CarService.RepariOrders.Api.Services
                 CarId = order.CarId,
                 OrderDate = order.OrderDate
             };
+
             await _repairOrderRepository.Create(repairOrder);
+
             await _eventPublisher.PublishEvent("repairOrders", new RepairOrderCreatedEvent
             {
                 RepairOrderId = repairOrder.Id,
@@ -35,7 +37,32 @@ namespace CarService.RepariOrders.Api.Services
                 CarId = repairOrder.CarId,
                 OrderDate = repairOrder.OrderDate
             });
+
+
             return repairOrder;
+        }
+
+        public async Task<RepairOrder> GetRepairOrderByCarId(Guid carId)
+        {
+            return await _repairOrderRepository.GetByCarId(carId);
+        }
+
+        public async Task<RepairOrder> GetRepairOrderById(Guid id)
+        {
+            return await _repairOrderRepository.GetById(id);
+        }
+
+        public async Task UpdateRepairOrder(UpdateRepairOrderRequest order)
+        {
+            var model = new RepairOrder
+            {
+                Id = order.Id,
+                Price = order.Price,
+                OrderDate = order.OrderDate,
+                CarId = order.CarId
+            };
+
+            await _repairOrderRepository.Update(model);
         }
     }
 }

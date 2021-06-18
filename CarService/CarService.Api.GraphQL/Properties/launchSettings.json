@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "GraphQLCqrs": {
+    "CarService.Api.GraphQL": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

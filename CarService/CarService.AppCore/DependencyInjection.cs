@@ -11,9 +11,9 @@ namespace CarService.AppCore
     {
         public static IServiceCollection AddAppCore(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddHttpClient(HttpClientNames.UsersClient,
                 client => { client.BaseAddress = new Uri(configuration.GetConnectionString("UsersService")); });
+
             services.AddHttpClient(HttpClientNames.RepairOrdersClient,
                 client => { client.BaseAddress = new Uri(configuration.GetConnectionString("RepairOrder")); });
 

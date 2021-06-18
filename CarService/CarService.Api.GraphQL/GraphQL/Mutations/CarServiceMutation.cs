@@ -13,6 +13,7 @@ namespace CarService.Api.GraphQL.GraphQL.Mutations
         public CarServiceMutation(IMediator mediator)
         {
             Name = "Mutation";
+
             Field<CarOwnerType>("createOwner",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<CreateCarOwnerType>> {Name = "carOwner"}
@@ -21,6 +22,7 @@ namespace CarService.Api.GraphQL.GraphQL.Mutations
                     var user = context.GetArgument<CarOwner>("carOwner");
                     return mediator.Send(new CreateCarOwnerCommand(user));
                 });
+
             Field<RepairOrderType>("createRepairOrder",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<CreateRepairOrderType>>
                     {Name = "repairOrder"}),
@@ -29,7 +31,15 @@ namespace CarService.Api.GraphQL.GraphQL.Mutations
                     var repairOrder = context.GetArgument<RepairOrder>("repairOrder");
                     return mediator.Send(new CreateRepairOrderCommand(repairOrder));
                 });
-        }
 
+            Field<CarType>("createCar",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<CreateCarType>>
+                { Name = "carOwner" }),
+                resolve: context =>
+                {
+                    var carOwner = context.GetArgument<Car>("carOwner");
+                    return mediator.Send(new CreateCarCommand(carOwner));
+                });
+        }
     }
 }

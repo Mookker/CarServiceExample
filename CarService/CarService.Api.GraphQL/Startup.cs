@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
+using CarService.AppCore.Services;
 
 namespace CarService.Api.GraphQL
 {
@@ -40,6 +41,7 @@ namespace CarService.Api.GraphQL
             services.AddScoped<CarOwnerType>();
             services.AddScoped<CreateCarOwnerType>();
             services.AddScoped<CreateRepairOrderType>();
+            services.AddScoped<CreateCarType>();
             services.AddScoped<ISchema, CarServiceSchema>();
 
             services.AddGraphQL(options =>
@@ -48,7 +50,7 @@ namespace CarService.Api.GraphQL
                 })
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
                 .AddSystemTextJson();
-            services.AddMediatR(typeof(GetCarQuery));
+            services.AddMediatR(typeof(GetCarQueryById));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +62,12 @@ namespace CarService.Api.GraphQL
             // use graphql-playground at default url /ui/playground
             app.UseGraphQLPlayground();
 
-            app.ApplicationServices.GetService<IEventListener>();
+            // Error
+            var scope = app.ApplicationServices.CreateScope();
+            var service = scope.ServiceProvider.GetService<IEventListener>();
+
+            //app.ApplicationServices.GetService(scope.ServiceProvider.GetServices());
+            //app.ApplicationServices.GetService<IEventListener>();
         }
     }
 }

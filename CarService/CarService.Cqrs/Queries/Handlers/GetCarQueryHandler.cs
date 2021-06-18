@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CarService.Cqrs.Queries.Handlers
 {
-    public class GetCarQueryHandler : IRequestHandler<GetCarQuery, Car>
+    public class GetCarQueryHandler : IRequestHandler<GetCarQueryById, Car>
     {
         private readonly ICarsRepository _carsRepository;
 
@@ -15,7 +15,7 @@ namespace CarService.Cqrs.Queries.Handlers
             _carsRepository = carsRepository;
         }
 
-        public Task<Car> Handle(GetCarQuery request, CancellationToken cancellationToken)
+        public Task<Car> Handle(GetCarQueryById request, CancellationToken cancellationToken)
         {
             return _carsRepository.GetById(request.Id);
         }

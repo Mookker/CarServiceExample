@@ -19,7 +19,6 @@ namespace CarService.AppCore
 
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IRepairOrdersService, RepairOrdersService>();
-            //services.AddSingleton<IEventListener, RedisEventListener>();
 
 
             return services;

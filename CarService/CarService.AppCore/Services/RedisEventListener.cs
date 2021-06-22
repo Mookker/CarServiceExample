@@ -12,13 +12,12 @@ namespace CarService.AppCore.Services
 {
     public class RedisEventListener: IEventListener, IDisposable
     {
-        //private readonly IRepairOrdersRepository _repairOrdersRepository;
+        private readonly IRepairOrdersRepository _repairOrdersRepository;
         private readonly ISubscriber _subscriber;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public RedisEventListener(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
+        public RedisEventListener(IConfiguration configuration, IRepairOrdersRepository repairOrdersRepository)
         {
-            _serviceScopeFactory = serviceScopeFactory;
+            _repairOrdersRepository = repairOrdersRepository;
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
             _subscriber = redis.GetSubscriber();
             var channel = _subscriber.Subscribe("repairOrders");
@@ -34,11 +33,7 @@ namespace CarService.AppCore.Services
                 return Task.CompletedTask;
             }
 
-            using var scope = _serviceScopeFactory.CreateScope();
-            var repairOrdersRepository = scope.ServiceProvider.GetService<IRepairOrdersRepository>();
-
-
-            return repairOrdersRepository.Create(new RepairOrder
+            return _repairOrdersRepository.Create(new RepairOrder
             {
                 Id = eventObject.RepairOrderId,
                 Price = eventObject.Price,

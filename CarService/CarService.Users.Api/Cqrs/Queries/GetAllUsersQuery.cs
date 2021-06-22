@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarService.Users.Api.Cqrs.Queries
 {
-    public record GetAllUsersQuery : IRequest<IList<UserDto>>
+    public record GetAllUsersQuery : IRequest<IEnumerable<UserDto>>
     {
 
     }

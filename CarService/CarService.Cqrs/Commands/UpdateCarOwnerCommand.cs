@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarService.Cqrs.Commands
 {
-    public record UpdateCarOwnerCommand : IRequest<CarOwner>
+    public record UpdateCarOwnerCommand : IRequest
     {
         public Guid Id { get; init; }
         public string FirstName { get; init; }

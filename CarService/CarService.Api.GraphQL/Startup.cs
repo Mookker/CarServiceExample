@@ -21,6 +21,8 @@ namespace CarService.Api.GraphQL
 {
     public class Startup
     {
+        private static IEventListener _eventListener;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -50,6 +52,7 @@ namespace CarService.Api.GraphQL
                 })
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
                 .AddSystemTextJson();
+
             services.AddMediatR(typeof(GetCarQueryById));
         }
 
@@ -62,12 +65,7 @@ namespace CarService.Api.GraphQL
             // use graphql-playground at default url /ui/playground
             app.UseGraphQLPlayground();
 
-            // Error
-            var scope = app.ApplicationServices.CreateScope();
-            var service = scope.ServiceProvider.GetService<IEventListener>();
-
-            //app.ApplicationServices.GetService(scope.ServiceProvider.GetServices());
-            //app.ApplicationServices.GetService<IEventListener>();
+            _eventListener = app.ApplicationServices.GetService<IEventListener>();
         }
     }
 }

@@ -8,6 +8,8 @@ using CarService.Users.Api.Models.Requests;
 using CarService.Users.Api.Models.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using CarService.Users.Api.Models.Dtos;
 
 namespace CarService.Users.Api.Controllers
 {
@@ -25,11 +27,23 @@ namespace CarService.Users.Api.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<IActionResult> GetUserById(string userId)
+        public async Task<IActionResult> GetUserById(Guid userId)
         {
-            var dto = await _mediator.Send(new GetUserByIdQuery(userId));
+            if (userId == Guid.Empty)
+            {
+                return BadRequest("Invalid User id");
+            }
 
-            return Ok(_mapper.Map<UserResponse>(dto));
+            var dto = await _mediator.Send(new GetUserByIdQuery(userId.ToString()));
+
+            if (dto == null)
+            {
+                return NotFound("User is not found");
+            }
+
+            var response = _mapper.Map<UserResponse>(dto);
+
+            return Ok(response);
         }
 
         [HttpPost]
@@ -44,12 +58,17 @@ namespace CarService.Users.Api.Controllers
         public async Task<IActionResult> GetUsers([FromQuery] string carId)
         {
             var dtoList = await _mediator.Send(new GetAllUsersQuery());
+            IEnumerable<UserResponse> response;
 
-            var response = dtoList.Select(dto => _mapper.Map<UserResponse>(dto));
-
-            if (!string.IsNullOrEmpty(carId))
+            if (string.IsNullOrEmpty(carId))
             {
-                response = response.Where(c => c.CarId == carId).ToList();
+                response = dtoList.Select(dto => _mapper.Map<UserResponse>(dto));
+            }
+            else
+            {
+                response = dtoList
+                    .Select(dto => _mapper.Map<UserResponse>(dto))
+                    .Where(dto => dto.CarId == carId);
             }
 
             return Ok(response);
@@ -66,10 +85,20 @@ namespace CarService.Users.Api.Controllers
         }
 
         [HttpPut("{userId}")]
-        public async Task<IActionResult> UpdateUser(string userId, [FromBody] UpdateUserRequest request)
+        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UpdateUserRequest request)
         {
+            if (userId == Guid.Empty)
+            {
+                return BadRequest("Invalid User id");
+            }
+
+            if (request == null)
+            {
+                return BadRequest("Invalid body request");
+            }
+
             var dto = await _mediator.Send(new UpdateUserCommand(
-                Guid.Parse(userId), request.FirstName, request.LastName, request.DoB, request.CarId));
+                userId, request.FirstName, request.LastName, request.DoB, request.CarId));
 
             var response = _mapper.Map<UserResponse>(dto);
 

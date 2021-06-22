@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarService.Users.Api.Cqrs.Commands
 {
-    public record DeleteUserCommand : IRequest<UserDto>
+    public record DeleteUserCommand : IRequest
     {
         public Guid Id { get; }
 

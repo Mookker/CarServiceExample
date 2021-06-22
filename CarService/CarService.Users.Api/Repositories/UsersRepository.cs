@@ -18,8 +18,10 @@ namespace CarService.Users.Api.Repositories
 
         public Task<User> GetById(Guid userId)
         {
+            var id = new { Id = userId };
+
             return _dapper.QueryFirstOrDefaultAsync<User>(
-                $@"SELECT ""Id"", ""FirstName"", ""LastName"", ""DoB"", ""CarId"" FROM users WHERE ""Id"" = '{userId}'");
+                $@"SELECT ""Id"", ""FirstName"", ""LastName"", ""DoB"", ""CarId"" FROM users WHERE ""Id"" = @Id", id);
         }
 
         public Task Create(User user)
@@ -47,18 +49,20 @@ namespace CarService.Users.Api.Repositories
             return _dapper.ExecuteAsync(query, user);
         }
 
-        public Task Delete(User user)
+        public Task Delete(Guid userId)
         {
-            string query = $@"DELETE FROM users WHERE ""Id"" = '{user.Id}'";
+            var id = new { Id = userId };
+            string query = $@"DELETE FROM users WHERE ""Id"" = @Id";
 
-            return _dapper.ExecuteAsync(query);
+            return _dapper.ExecuteAsync(query, id);
         }
 
         public Task<User> GetByCarId(Guid carId)
         {
-            string query = $@"SELECT * FROM users WHERE ""CarId"" = '{carId}'";
+            var id = new { CarId = carId };
+            string query = $@"SELECT * FROM users WHERE ""CarId"" = @CarId ";
 
-            return _dapper.QueryFirstOrDefaultAsync<User>(query);
+            return _dapper.QueryFirstOrDefaultAsync<User>(query, id);
         }
     }
 }

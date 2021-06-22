@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarService.Users.Api.Cqrs.Commands.Handlers
 {
-    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, UserDto>
+    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
     {
         private readonly IUsersRepository _usersRepository;
 
@@ -19,13 +19,11 @@ namespace CarService.Users.Api.Cqrs.Commands.Handlers
             _usersRepository = usersRepository;
         }
 
-        public async Task<UserDto> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = new User { Id = request.Id };
+            await _usersRepository.Delete(request.Id);
 
-            await _usersRepository.Delete(user);
-
-            return new UserDto(user);
+            return Unit.Value;
         }
     }
 }

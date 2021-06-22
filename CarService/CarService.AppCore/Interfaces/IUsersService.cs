@@ -11,7 +11,7 @@ namespace CarService.AppCore.Interfaces
         Task<CarOwner> GetUserById(string userId);
         Task<CarOwner> GetUserByCarId(string carId);
         Task<CarOwner> CreateUser(CreateCarOwnerRequest request);
-        Task<CarOwner> UpdateUser(UpdateCarOwnerRequest request);
-        Task<CarOwner> DeleteUser(string userId);
+        Task UpdateUser(UpdateCarOwnerRequest request);
+        Task DeleteUser(string userId);
     }
 }

@@ -32,6 +32,13 @@ namespace CarService.Users.Api.Cqrs.Commands.Handlers
 
             await _usersRepository.Update(user);
 
+            var updatedUser = await _usersRepository.GetById(user.Id);
+
+            if (!user.Equals(updatedUser))
+            {
+                throw new Exception("User was not updated");
+            }
+
             return new UserDto(user);
         }
     }

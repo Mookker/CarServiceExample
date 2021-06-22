@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarService.Cqrs.Commands.Handlers
 {
-    public class UpdateCarOwnerCommandHandler : IRequestHandler<UpdateCarOwnerCommand, CarOwner>
+    public class UpdateCarOwnerCommandHandler : IRequestHandler<UpdateCarOwnerCommand>
     {
         private readonly IUsersService _usersService;
 
@@ -20,7 +20,7 @@ namespace CarService.Cqrs.Commands.Handlers
             _usersService = usersService;
         }
 
-        public Task<CarOwner> Handle(UpdateCarOwnerCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateCarOwnerCommand request, CancellationToken cancellationToken)
         {
             var carOwnerRequest = new UpdateCarOwnerRequest
             {
@@ -31,7 +31,9 @@ namespace CarService.Cqrs.Commands.Handlers
                 DoB = request.DoB
             };
 
-            return _usersService.UpdateUser(carOwnerRequest);
+            await _usersService.UpdateUser(carOwnerRequest);
+
+            return Unit.Value;
         }
     }
 }

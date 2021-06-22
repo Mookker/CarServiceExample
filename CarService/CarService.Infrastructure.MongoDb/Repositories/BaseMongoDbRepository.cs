@@ -24,9 +24,9 @@ namespace CarService.Infrastructure.MongoDb.Repositories
             return Collection.Find(x => x.Id == entity.Id).FirstOrDefaultAsync();
         }
 
-        public Task Delete(T entity)
+        public Task Delete(Guid id)
         {
-            return Collection.DeleteOneAsync(x => x.Id == entity.Id);
+            return Collection.DeleteOneAsync(x => x.Id == id);
         }
 
         public Task<List<T>> GetAll()

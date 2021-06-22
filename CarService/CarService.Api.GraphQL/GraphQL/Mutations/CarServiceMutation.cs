@@ -34,11 +34,11 @@ namespace CarService.Api.GraphQL.GraphQL.Mutations
 
             Field<CarType>("createCar",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<CreateCarType>>
-                { Name = "carOwner" }),
+                { Name = "car" }),
                 resolve: context =>
                 {
-                    var carOwner = context.GetArgument<Car>("carOwner");
-                    return mediator.Send(new CreateCarCommand(carOwner));
+                    var car = context.GetArgument<Car>("car");
+                    return mediator.Send(new CreateCarCommand(car));
                 });
         }
     }

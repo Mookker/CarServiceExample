@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CarService.Users.Api.Cqrs.Queries.Handlers
 {
-    public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, IList<UserDto>>
+    public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, IEnumerable<UserDto>>
     {
         private readonly IUsersRepository _usersRepository;
 
@@ -18,12 +18,12 @@ namespace CarService.Users.Api.Cqrs.Queries.Handlers
             _usersRepository = usersRepository;
         }
 
-        public async Task<IList<UserDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<UserDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
             var users = await _usersRepository.GetAll();
-            var usersDtoList = users.Select(u => new UserDto(u)).ToList();
+            var usersDto = users.Select(u => new UserDto(u));
 
-            return usersDtoList;
+            return usersDto;
         }
     }
 }

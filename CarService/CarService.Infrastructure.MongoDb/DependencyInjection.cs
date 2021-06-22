@@ -18,7 +18,7 @@ namespace CarService.Infrastructure.MongoDb
                  new MongoClient(new MongoClientSettings()
                  {
                      GuidRepresentation = GuidRepresentation.Standard,
-                     Server = new MongoServerAddress(configuration.GetConnectionString("MongoDB"))
+                     Server = new MongoServerAddress(configuration.GetConnectionString("MongoDBServer"), 27888),
                  })
             );
             services.AddScoped<ICarsRepository, CarsRepository>();

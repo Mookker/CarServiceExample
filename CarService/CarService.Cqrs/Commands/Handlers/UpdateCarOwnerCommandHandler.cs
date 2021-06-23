@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarService.Cqrs.Commands.Handlers
 {
-    public class UpdateCarOwnerCommandHandler : IRequestHandler<UpdateCarOwnerCommand>
+    public class UpdateCarOwnerCommandHandler : AsyncRequestHandler<UpdateCarOwnerCommand>
     {
         private readonly IUsersService _usersService;
 
@@ -20,7 +20,7 @@ namespace CarService.Cqrs.Commands.Handlers
             _usersService = usersService;
         }
 
-        public async Task<Unit> Handle(UpdateCarOwnerCommand request, CancellationToken cancellationToken)
+        protected override async Task Handle(UpdateCarOwnerCommand request, CancellationToken cancellationToken)
         {
             var carOwnerRequest = new UpdateCarOwnerRequest
             {
@@ -32,8 +32,6 @@ namespace CarService.Cqrs.Commands.Handlers
             };
 
             await _usersService.UpdateUser(carOwnerRequest);
-
-            return Unit.Value;
         }
     }
 }

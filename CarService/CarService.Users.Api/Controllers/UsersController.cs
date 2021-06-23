@@ -55,12 +55,12 @@ namespace CarService.Users.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers([FromQuery] string carId)
+        public async Task<IActionResult> GetUsers([FromQuery] Guid carId)
         {
             var dtoList = await _mediator.Send(new GetAllUsersQuery());
             IEnumerable<UserResponse> response;
-
-            if (string.IsNullOrEmpty(carId))
+            
+            if (carId == Guid.Empty)
             {
                 response = dtoList.Select(dto => _mapper.Map<UserResponse>(dto));
             }
@@ -75,13 +75,16 @@ namespace CarService.Users.Api.Controllers
         }
 
         [HttpDelete("{userId}")]
-        public async Task<IActionResult> DeleteUser(string userId)
+        public async Task<IActionResult> DeleteUser(Guid userId)
         {
-            var dto = await _mediator.Send(new DeleteUserCommand(Guid.Parse(userId)));
+            if (userId == Guid.Empty)
+            {
+                return BadRequest("Invalid User id");
+            }
 
-            var response = _mapper.Map<UserResponse>(dto);
+            await _mediator.Send(new DeleteUserCommand(userId));
 
-            return Ok(response);
+            return Ok();
         }
 
         [HttpPut("{userId}")]

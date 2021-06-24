@@ -1,20 +1,16 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CarService.Users.Api.Models.Requests
 {
-    public record CreateUserRequest
+    public record UpdateUserRequest
     {
-        [Required]
         public string FirstName { get; init; }
-
-        [Required]
         public string LastName { get; init; }
-
-        [Required]
         public DateTime DoB { get; init; }
-
-        [Required]
         public Guid CarId { get; init; }
     }
 }

@@ -14,7 +14,7 @@ namespace CarService.Api.GraphQL.GraphQL.Queries
             Name = "Query";
             Field<CarType>("car", arguments: new QueryArguments(
                 new QueryArgument<NonNullGraphType<StringGraphType>> {Name = "id", Description = "id of the car"}
-            ), resolve: context => mediator.Send(new GetCarQuery(context.GetArgument<Guid>("id"))));
+            ), resolve: context => mediator.Send(new GetCarQueryById(context.GetArgument<Guid>("id"))));
         }
     }
 }

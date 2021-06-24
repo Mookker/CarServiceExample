@@ -4,9 +4,9 @@ using MediatR;
 
 namespace CarService.Cqrs.Queries
 {
-    public record GetCarQuery : IRequest<Car>
+    public record GetCarQueryById : IRequest<Car>
     {
-        public GetCarQuery(Guid id) => Id = id;
+        public GetCarQueryById(Guid id) => Id = id;
 
         public Guid Id { get; }
     }

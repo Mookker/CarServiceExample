@@ -23,7 +23,10 @@ namespace CarService.RepariOrders.Api.Controllers
         public async Task<IActionResult> CreateRepairOrder([FromBody]CreateRepairModelRequest createRepairModelRequest)
         {
             if (createRepairModelRequest == null)
+            {
                 return BadRequest("Body is missing");
+            }
+
             var result = await _repairOrdersService.CreateRepairOrder(createRepairModelRequest);
 
             return Ok(_mapper.Map<RepairOrderResponse>(result));

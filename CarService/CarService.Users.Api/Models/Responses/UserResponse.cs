@@ -8,6 +8,6 @@ namespace CarService.Users.Api.Models.Responses
         public string FirstName { get; init; }
         public string LastName { get; init; }
         public DateTime DoB { get; init; }
-        public string CarId { get; init; }
+        public Guid CarId { get; init; }
     }
 }

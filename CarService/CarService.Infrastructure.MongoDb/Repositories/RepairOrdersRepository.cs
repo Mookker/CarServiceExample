@@ -21,9 +21,14 @@ namespace CarService.Infrastructure.MongoDb.Repositories
             return Collection.Find(x => x.CarId == carId).ToListAsync();
         }
 
-        public Task Create(RepairOrder repairOrder)
+        public override Task Update(RepairOrder repairOrder)
         {
-            return Collection.InsertOneAsync(repairOrder);
+            var update = Builders<RepairOrder>.Update
+                .Set(o => o.Price, repairOrder.Price)
+                .Set(o => o.OrderDate, repairOrder.OrderDate)
+                .Set(o => o.CarId, repairOrder.CarId);
+
+            return Collection.UpdateOneAsync(o => o.Id == repairOrder.Id, update);
         }
     }
 }

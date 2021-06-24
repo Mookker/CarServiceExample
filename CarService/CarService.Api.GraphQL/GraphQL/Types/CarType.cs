@@ -17,8 +17,10 @@ namespace CarService.Api.GraphQL.GraphQL.Types
             Field(x => x.Year).Description("Year when car was made");
             Field(x => x.Vin).Description("Car VIN code");
             Field(x => x.Millage).Description("Car millage");
+
             Field<CarOwnerType>("carOwner", "Car owner details",
                 resolve: context => mediator.Send(new GetUserByIdQuery(context.Source.OwnerId)));
+
             Field<ListGraphType<RepairOrderType>>("repairOrders", "Car Repair Orders",
                 resolve: context => mediator.Send(new GetCarRepairOrdersQuery(context.Source.Id)));
         }

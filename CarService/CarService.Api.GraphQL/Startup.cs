@@ -15,11 +15,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
+using CarService.AppCore.Services;
 
 namespace CarService.Api.GraphQL
 {
     public class Startup
     {
+        private static IEventListener _eventListener;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,6 +43,7 @@ namespace CarService.Api.GraphQL
             services.AddScoped<CarOwnerType>();
             services.AddScoped<CreateCarOwnerType>();
             services.AddScoped<CreateRepairOrderType>();
+            services.AddScoped<CreateCarType>();
             services.AddScoped<ISchema, CarServiceSchema>();
 
             services.AddGraphQL(options =>
@@ -48,11 +52,12 @@ namespace CarService.Api.GraphQL
                 })
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
                 .AddSystemTextJson();
-            services.AddMediatR(typeof(GetCarQuery));
+
+            services.AddMediatR(typeof(GetCarQueryById));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRepairOrdersRepository repairOrdersRepository)
         {
             // add http for Schema at default url /graphql
             app.UseGraphQL<ISchema>();
@@ -60,7 +65,7 @@ namespace CarService.Api.GraphQL
             // use graphql-playground at default url /ui/playground
             app.UseGraphQLPlayground();
 
-            app.ApplicationServices.GetService<IEventListener>();
+            _eventListener = new RedisEventListener(Configuration, repairOrdersRepository);
         }
     }
 }

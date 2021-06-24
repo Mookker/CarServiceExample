@@ -26,7 +26,7 @@ namespace CarService.RepariOrders.Api
             services.AddDapperForPostgreSQL();
             services.AddScoped<IRepairOrderRepository, RepairOrderRepository>();
             services.AddScoped<IRepairOrdersService, RepairOrdersService>();
-            services.AddScoped<IEventPublisher, EventPublisher>();
+            services.AddSingleton<IEventPublisher, EventPublisher>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

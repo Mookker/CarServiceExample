@@ -4,6 +4,7 @@ using CarService.AppCore.Interfaces;
 using CarService.AppCore.Models.Events;
 using CarService.Domain.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
@@ -28,7 +29,9 @@ namespace CarService.AppCore.Services
             //TODO: something smart to resolve event
             var eventObject = JsonConvert.DeserializeObject<RepairOrderCreatedEvent>(message.Message);
             if (eventObject == null)
+            {
                 return Task.CompletedTask;
+            }
 
             return _repairOrdersRepository.Create(new RepairOrder
             {
@@ -37,7 +40,6 @@ namespace CarService.AppCore.Services
                 CarId = eventObject.CarId,
                 OrderDate = eventObject.OrderDate
             });
-            ;
         }
 
         protected virtual void Dispose(bool disposing)

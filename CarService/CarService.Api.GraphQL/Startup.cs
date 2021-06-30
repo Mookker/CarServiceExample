@@ -21,8 +21,6 @@ namespace CarService.Api.GraphQL
 {
     public class Startup
     {
-        private static IEventListener _eventListener;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -57,15 +55,13 @@ namespace CarService.Api.GraphQL
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRepairOrdersRepository repairOrdersRepository)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // add http for Schema at default url /graphql
             app.UseGraphQL<ISchema>();
 
             // use graphql-playground at default url /ui/playground
             app.UseGraphQLPlayground();
-
-            _eventListener = new RedisEventListener(Configuration, repairOrdersRepository);
         }
     }
 }

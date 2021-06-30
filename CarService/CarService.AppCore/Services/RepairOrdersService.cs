@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -23,6 +24,34 @@ namespace CarService.AppCore.Services
             result.EnsureSuccessStatusCode();
 
             return await result.Content.ReadFromJsonAsync<RepairOrder>();
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var result = await _client.DeleteAsync($"api/v1/repairOrders/{id}");
+            result.EnsureSuccessStatusCode();
+        }
+
+        public async Task<RepairOrder> GetByCarId(Guid carId)
+        {
+            var result = await _client.GetAsync($"api/v1/repairOrders/?carId={carId}");
+            result.EnsureSuccessStatusCode();
+
+            return await result.Content.ReadFromJsonAsync<RepairOrder>();
+        }
+
+        public async Task<RepairOrder> GetById(Guid id)
+        {
+            var result = await _client.GetAsync($"api/v1/repairOrders/{id}");
+            result.EnsureSuccessStatusCode();
+
+            return await result.Content.ReadFromJsonAsync<RepairOrder>();
+        }
+
+        public async Task UpdateAsync(UpdateRepairOrderRequest request)
+        {
+            var result = await _client.PutAsJsonAsync("api/v1/repairOrders", request);
+            result.EnsureSuccessStatusCode();
         }
     }
 }

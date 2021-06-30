@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using CarService.Domain.Models;
 using CarService.RepariOrders.Api.Interfaces;
-using CarService.RepariOrders.Api.Models.Domain;
 using Dapper.Extensions;
 
 namespace CarService.RepariOrders.Api.Repositories
@@ -21,36 +21,39 @@ namespace CarService.RepariOrders.Api.Repositories
                 order);
         }
 
-        public Task Delete(RepairOrder order)
+        public Task Delete(Guid id)
         {
-            string query = $@"DELETE FROM repairOrders WHERE ""Id"" = '{order.Id}'";
+            var ID = new { Id = id };
+            string query = $@"DELETE FROM ""repairOrders"" WHERE ""Id"" = @Id";
 
-            return _dapper.ExecuteAsync(query);
+            return _dapper.ExecuteAsync(query, ID);
         }
 
         public Task<RepairOrder> GetByCarId(Guid carId)
         {
-            string query = $@"SELECT * FROM repairOrders WHERE ""CarId"" = '{carId}'";
+            var ID = new { CarId = carId };
+            string query = $@"SELECT * FROM ""repairOrders"" WHERE ""CarId"" = @CarId";
 
-            return _dapper.QueryFirstOrDefaultAsync<RepairOrder>(query);
+            return _dapper.QueryFirstOrDefaultAsync<RepairOrder>(query, ID);
         }
 
         public Task<RepairOrder> GetById(Guid id)
         {
-            string query = $@"SELECT * FROM repairOrders WHERE ""Id"" = '{id}'";
+            var ID = new { Id = id };
+            string query = $@"SELECT * FROM ""repairOrders"" WHERE ""Id"" = @Id";
 
-            return _dapper.QueryFirstOrDefaultAsync<RepairOrder>(query);
+            return _dapper.QueryFirstOrDefaultAsync<RepairOrder>(query, ID);
         }
 
         public Task Update(RepairOrder order)
         {
-            string query = @"UPDATE repairOrders SET 
+            string query = @"UPDATE ""repairOrders"" SET 
                            ""Price"" = @Price, 
                            ""CarId"" = @CarId, 
-                           ""OrderDate"" = @OrderDate, 
+                           ""OrderDate"" = @OrderDate
                              WHERE ""Id"" = @Id";
 
-            return _dapper.ExecuteAsync(query);
+            return _dapper.ExecuteAsync(query, order);
         }
     }
 }

@@ -16,5 +16,19 @@ namespace CarService.Domain.Models
 
         [BsonElement("carId")]
         public Guid CarId { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is RepairOrder order &&
+                   Id.Equals(order.Id) &&
+                   Price == order.Price &&
+                   OrderDate == order.OrderDate &&
+                   CarId.Equals(order.CarId);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Price, OrderDate, CarId);
+        }
     }
 }

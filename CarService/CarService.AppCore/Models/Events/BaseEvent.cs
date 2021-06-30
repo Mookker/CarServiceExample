@@ -1,15 +1,11 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace CarService.AppCore.Models.Events
 {
-    public abstract record BaseEvent
+    public record BaseEvent<T> where T : class
     {
-        protected BaseEvent()
-        {
-            Id = Guid.NewGuid();
-            CreatedDate = DateTime.UtcNow;
-        }
-        public Guid Id { get; }
-        public DateTime CreatedDate { get; }
+        public virtual string Type { get; init; }
+        public virtual T Data { get; init; }
     }
 }

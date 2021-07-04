@@ -18,9 +18,9 @@ namespace CarService.AppCore.Cqrs.Commands.Handlers
             _repairOrdersRepository = repairOrdersRepository;
         }
 
-        protected override async Task Handle(DeleteRepairOrderCommand request, CancellationToken cancellationToken)
+        protected override Task Handle(DeleteRepairOrderCommand request, CancellationToken cancellationToken)
         {
-            await _repairOrdersRepository.Delete(request.Id);
+            return _repairOrdersRepository.Delete(request.Id);
         }
     }
 }

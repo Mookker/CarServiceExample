@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace CarService.AppCore.Models.Events
 {
-    class RedisEventFactory : IEventFactory<RepairOrder>
+    public class RedisEventFactory : IEventFactory
     {
-        public BaseEvent<RepairOrder> CreateEvent(Type eventType)
+        public BaseEvent<T> CreateEvent<T>(Type eventType) where T : class
         {
-            return Activator.CreateInstance(eventType) as BaseEvent<RepairOrder>;
+            return Activator.CreateInstance(eventType) as BaseEvent<T>;
         }
     }
 }

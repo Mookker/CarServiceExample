@@ -5,6 +5,6 @@ namespace CarService.AppCore.Interfaces
 {
     public interface IEventPublisher
     {
-        Task PublishEvent<T>(string topic, BaseEvent<T> @event) where T: class;
+        Task PublishEvent<T>(string topic, BaseEvent<T> @event) where T : class;
     }
 }

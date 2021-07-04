@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using CarService.AppCore.Interfaces;
+using CarService.AppCore.Models.EventModels;
 using CarService.AppCore.Models.Events;
 using CarService.AppCore.Models.Requests;
 using CarService.Domain.Models;
@@ -34,7 +35,13 @@ namespace CarService.RepariOrders.Api.Services
             await _eventPublisher.PublishEvent("repairOrders", new RepairOrderCreatedEvent
             {
                 Type = typeof(RepairOrderCreatedEvent).Namespace + "." + nameof(RepairOrderCreatedEvent),
-                Data = repairOrder
+                Data = new RepairOrderRedisEventDataModel
+                {
+                    Id = repairOrder.Id,
+                    CarId = repairOrder.CarId,
+                    Price = repairOrder.Price,
+                    OrderDate = repairOrder.OrderDate
+                }
             });
 
             return repairOrder;
@@ -47,7 +54,7 @@ namespace CarService.RepariOrders.Api.Services
             await _eventPublisher.PublishEvent("repairOrders", new RepairOrderDeletedEvent
             {
                 Type = typeof(RepairOrderDeletedEvent).Namespace + "." + nameof(RepairOrderDeletedEvent),
-                Data = new RepairOrder { Id = id }
+                Data = new RepairOrderRedisEventDataModel { Id = id }
             });
         }
 
@@ -80,7 +87,13 @@ namespace CarService.RepariOrders.Api.Services
             await _eventPublisher.PublishEvent("repairOrders", new RepairOrderUpdatedEvent
             {
                 Type = typeof(RepairOrderUpdatedEvent).Namespace + "." + nameof(RepairOrderUpdatedEvent),
-                Data = repairOrder
+                Data = new RepairOrderRedisEventDataModel
+                {
+                    Id = repairOrder.Id,
+                    CarId = repairOrder.CarId,
+                    Price = repairOrder.Price,
+                    OrderDate = repairOrder.OrderDate
+                }
             });
         }
     }

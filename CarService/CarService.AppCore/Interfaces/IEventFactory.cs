@@ -1,4 +1,5 @@
 ﻿using CarService.AppCore.Models.Events;
+using CarService.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace CarService.AppCore.Interfaces
 {
-    interface IEventFactory<T> where T : class
+    public interface IEventFactory
     {
-        BaseEvent<T> CreateEvent(Type eventType);
+        BaseEvent<T> CreateEvent<T>(Type eventType) where T : class;
     }
 }

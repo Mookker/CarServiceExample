@@ -19,7 +19,7 @@ namespace CarService.AppCore.Cqrs.Commands.Handlers
             _repairOrdersRepository = repairOrdersRepository;
         }
 
-        public async Task<RepairOrder> Handle(CreateRepairOrderCommand request, CancellationToken cancellationToken)
+        public Task<RepairOrder> Handle(CreateRepairOrderCommand request, CancellationToken cancellationToken)
         {
             var repairOrder = new RepairOrder
             {
@@ -29,9 +29,7 @@ namespace CarService.AppCore.Cqrs.Commands.Handlers
                 CarId = request.CarId
             };
 
-            var response = await _repairOrdersRepository.Create(repairOrder);
-
-            return response;
+            return _repairOrdersRepository.Create(repairOrder);
         }
     }
 }

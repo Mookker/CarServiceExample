@@ -1,18 +1,10 @@
-﻿using CarService.AppCore.Services;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
+﻿using CarService.Infrastructure.MongoDb;
+using CarService.RepairOrders.Messenger.Cqrs.Commands.Handlers;
+using CarService.RepairOrders.Messenger.Interfaces;
+using CarService.RepairOrders.Messenger.Services;
 using MediatR;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using CarService.AppCore.Interfaces;
-using CarService.Infrastructure.MongoDb.Repositories;
-using CarService.Infrastructure.MongoDb;
-using CarService.AppCore.Cqrs.Commands;
-using System.Threading.Tasks;
-using System.Reflection;
-using CarService.AppCore.Cqrs.Commands.Handlers;
-using CarService.Domain.Models;
+using Microsoft.Extensions.Hosting;
 
 namespace CarService.RepairOrders.Messenger
 {
@@ -34,6 +26,7 @@ namespace CarService.RepairOrders.Messenger
                     services
                         .AddMongoDb(appContext.Configuration)
                         .AddMediatR(typeof(CreateRepairOrderCommandHandler))
+                        .AddScoped<ICommandFactory, CommandFactory>()
                         .AddSingleton<IEventListener, RedisEventListener>());
                         
         }

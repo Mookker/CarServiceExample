@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CarService.AppCore.Cqrs.Commands.Handlers
+namespace CarService.RepairOrders.Messenger.Cqrs.Commands.Handlers
 {
     public class UpdateRepairOrderCommandHandler : AsyncRequestHandler<UpdateRepairOrderCommand>
     {
@@ -32,7 +32,7 @@ namespace CarService.AppCore.Cqrs.Commands.Handlers
             await _repairOrdersRepository.Update(repairOrder);
 
             var updatedOrder = await _repairOrdersRepository.GetById(repairOrder.Id);
-            
+
             if (!repairOrder.Equals(updatedOrder))
             {
                 throw new Exception("Repair order was not updated");

@@ -7,11 +7,11 @@ using StackExchange.Redis;
 
 namespace CarService.AppCore.Services
 {
-    public class EventPublisher: IEventPublisher
+    public class RedisEventPublisher: IEventPublisher
     {
         private readonly ISubscriber _publisher;
 
-        public EventPublisher(IConfiguration configuration)
+        public RedisEventPublisher(IConfiguration configuration)
         {
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
             _publisher = redis.GetSubscriber();

@@ -34,8 +34,8 @@ namespace CarService.RepariOrders.Api.Services
 
             await _eventPublisher.PublishEvent("repairOrders", new RepairOrderCreatedEvent
             {
-                Type = typeof(RepairOrderCreatedEvent).Namespace + "." + nameof(RepairOrderCreatedEvent),
-                Data = new RepairOrderRedisEventDataModel
+                Type = nameof(RepairOrderCreatedEvent),
+                Data = new RepairOrderCreatedDataModel
                 {
                     Id = repairOrder.Id,
                     CarId = repairOrder.CarId,
@@ -53,8 +53,8 @@ namespace CarService.RepariOrders.Api.Services
 
             await _eventPublisher.PublishEvent("repairOrders", new RepairOrderDeletedEvent
             {
-                Type = typeof(RepairOrderDeletedEvent).Namespace + "." + nameof(RepairOrderDeletedEvent),
-                Data = new RepairOrderRedisEventDataModel { Id = id }
+                Type = nameof(RepairOrderDeletedEvent),
+                Data = new RepairOrderDeletedDataModel { Id = id }
             });
         }
 
@@ -86,8 +86,8 @@ namespace CarService.RepariOrders.Api.Services
 
             await _eventPublisher.PublishEvent("repairOrders", new RepairOrderUpdatedEvent
             {
-                Type = typeof(RepairOrderUpdatedEvent).Namespace + "." + nameof(RepairOrderUpdatedEvent),
-                Data = new RepairOrderRedisEventDataModel
+                Type = nameof(RepairOrderUpdatedEvent),
+                Data = new RepairOrderUpdatedDataModel
                 {
                     Id = repairOrder.Id,
                     CarId = repairOrder.CarId,

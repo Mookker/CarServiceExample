@@ -15,11 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.Domain", "CarSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.Users.Api", "CarService.Users.Api\CarService.Users.Api.csproj", "{F5E8425C-2212-4320-A0F3-D00FF7F80202}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.RepariOrders.Api", "CarService.RepariOrders.Api\CarService.RepariOrders.Api.csproj", "{2C3E1639-B024-43D2-945D-ACE3C605B12B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.RepairOrders.Api", "CarService.RepariOrders.Api\CarService.RepairOrders.Api.csproj", "{2C3E1639-B024-43D2-945D-ACE3C605B12B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.RepairOrders.Messenger", "CarService.RepairOrders.Messenger\CarService.RepairOrders.Messenger.csproj", "{99942BFD-A056-4E5A-8089-0E0624267E43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.Tests", "CarService.Tests\CarService.Tests.csproj", "{C5B7F2B7-FF22-4122-86F0-6F18C0A658C0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{62F59982-DE30-4FBC-8301-F6970ECB8344}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.Users.Api.Tests", "CarService.Users.Api.Tests\CarService.Users.Api.Tests.csproj", "{8910BEED-EE63-4702-9A25-86D913F5B6E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.RepairOrders.Api.Tests", "CarService.RepairOrders.Api.Tests\CarService.RepairOrders.Api.Tests.csproj", "{85161348-0A0F-4E0B-8F65-BCBB8DBC634D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,13 +63,21 @@ Global
 		{99942BFD-A056-4E5A-8089-0E0624267E43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99942BFD-A056-4E5A-8089-0E0624267E43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99942BFD-A056-4E5A-8089-0E0624267E43}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5B7F2B7-FF22-4122-86F0-6F18C0A658C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5B7F2B7-FF22-4122-86F0-6F18C0A658C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5B7F2B7-FF22-4122-86F0-6F18C0A658C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5B7F2B7-FF22-4122-86F0-6F18C0A658C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8910BEED-EE63-4702-9A25-86D913F5B6E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8910BEED-EE63-4702-9A25-86D913F5B6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8910BEED-EE63-4702-9A25-86D913F5B6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8910BEED-EE63-4702-9A25-86D913F5B6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85161348-0A0F-4E0B-8F65-BCBB8DBC634D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85161348-0A0F-4E0B-8F65-BCBB8DBC634D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85161348-0A0F-4E0B-8F65-BCBB8DBC634D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85161348-0A0F-4E0B-8F65-BCBB8DBC634D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8910BEED-EE63-4702-9A25-86D913F5B6E4} = {62F59982-DE30-4FBC-8301-F6970ECB8344}
+		{85161348-0A0F-4E0B-8F65-BCBB8DBC634D} = {62F59982-DE30-4FBC-8301-F6970ECB8344}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6941A13-10FC-4504-9827-E2551DB07412}

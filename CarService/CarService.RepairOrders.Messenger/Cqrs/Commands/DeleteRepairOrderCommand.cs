@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarService.AppCore.Cqrs.Commands
+namespace CarService.RepairOrders.Messenger.Cqrs.Commands
 {
     public record DeleteRepairOrderCommand : IRequest
     {

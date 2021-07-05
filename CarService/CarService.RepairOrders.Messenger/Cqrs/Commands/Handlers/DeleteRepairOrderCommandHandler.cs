@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using CarService.AppCore.Interfaces;
 using MediatR;
 
-namespace CarService.AppCore.Cqrs.Commands.Handlers
+namespace CarService.RepairOrders.Messenger.Cqrs.Commands.Handlers
 {
     public class DeleteRepairOrderCommandHandler : AsyncRequestHandler<DeleteRepairOrderCommand>
     {

@@ -8,7 +8,7 @@ using CarService.AppCore.Interfaces;
 using CarService.Domain.Models;
 using MediatR;
 
-namespace CarService.AppCore.Cqrs.Commands.Handlers
+namespace CarService.RepairOrders.Messenger.Cqrs.Commands.Handlers
 {
     public class CreateRepairOrderCommandHandler : IRequestHandler<CreateRepairOrderCommand, RepairOrder>
     {

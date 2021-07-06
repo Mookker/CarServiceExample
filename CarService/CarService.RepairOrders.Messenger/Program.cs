@@ -14,7 +14,7 @@ namespace CarService.RepairOrders.Messenger
         {
             var host = CreateHostBuilder(args).Build();
 
-            _ = host.Services.GetRequiredService<IEventListener>();
+            _ = host.Services.GetRequiredService<IRepairOrdersListener>();
 
             host.Run();
         }
@@ -27,8 +27,7 @@ namespace CarService.RepairOrders.Messenger
                         .AddMongoDb(appContext.Configuration)
                         .AddMediatR(typeof(CreateRepairOrderCommandHandler))
                         .AddScoped<ICommandFactory, CommandFactory>()
-                        .AddSingleton<IEventListener, RedisEventListener>());
-                        
+                        .AddSingleton<IRepairOrdersListener, RepairOrdersRedisEventListener>());
         }
     }
 }

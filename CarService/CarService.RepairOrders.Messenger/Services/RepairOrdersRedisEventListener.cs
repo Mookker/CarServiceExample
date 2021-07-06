@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace CarService.RepairOrders.Messenger.Services
 {
-    public class RedisEventListener : IEventListener, IDisposable
+    public class RepairOrdersRedisEventListener : IRepairOrdersListener, IDisposable
     {
         private readonly IMediator _mediator;
         private readonly ISubscriber _subscriber;
         private readonly ICommandFactory _commandFactory;
 
-        public RedisEventListener(IConfiguration configuration, IMediator mediator, ICommandFactory commandFactory)
+        public RepairOrdersRedisEventListener(IConfiguration configuration, IMediator mediator, ICommandFactory commandFactory)
         {
             _mediator = mediator;
             _commandFactory = commandFactory;

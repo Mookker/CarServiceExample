@@ -6,9 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using CarService.AppCore.Interfaces;
 using CarService.Domain.Models;
+using CarService.EventProcessor.Cqrs.Commands;
 using MediatR;
 
-namespace CarService.RepairOrders.Messenger.Cqrs.Commands.Handlers
+namespace CarService.EventProcessor.Cqrs.Commands.Handlers
 {
     public class CreateRepairOrderCommandHandler : IRequestHandler<CreateRepairOrderCommand, RepairOrder>
     {

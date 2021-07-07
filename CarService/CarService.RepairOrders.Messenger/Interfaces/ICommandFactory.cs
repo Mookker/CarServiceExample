@@ -3,7 +3,7 @@ using CarService.AppCore.Models.Events;
 using MediatR;
 using Newtonsoft.Json.Linq;
 
-namespace CarService.RepairOrders.Messenger.Interfaces
+namespace CarService.EventProcessor.Interfaces
 {
     public interface ICommandFactory
     {

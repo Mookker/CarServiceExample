@@ -1,11 +1,12 @@
 ﻿using CarService.AppCore.Models.EventModels;
 using CarService.AppCore.Models.Events;
-using CarService.RepairOrders.Messenger.Cqrs.Commands;
-using CarService.RepairOrders.Messenger.Interfaces;
+using CarService.EventProcessor.Cqrs.Commands;
+using CarService.EventProcessor.Interfaces;
+using CarService.EventProcessor.Сonstants;
 using MediatR;
 using Newtonsoft.Json.Linq;
 
-namespace CarService.RepairOrders.Messenger.Services
+namespace CarService.EventProcessor.Services
 {
     public class CommandFactory : ICommandFactory
     {
@@ -13,39 +14,39 @@ namespace CarService.RepairOrders.Messenger.Services
         {
             switch (@event.Type)
             {
-                case "RepairOrderCreatedEvent":
-                {
-                    var eventDataModel = @event.Data.ToObject<RepairOrderCreatedDataModel>();
-
-                    return new CreateRepairOrderCommand
+                case RepairOrderEvents.CreatedEvent:
                     {
-                        Id = eventDataModel.Id,
-                        Price = eventDataModel.Price,
-                        CarId = eventDataModel.CarId,
-                        OrderDate = eventDataModel.OrderDate,
-                    };
-                }
-                   
-                case "RepairOrderUpdatedEvent":
-                {
-                    var eventDataModel = @event.Data.ToObject<RepairOrderUpdatedDataModel>();
+                        var eventDataModel = @event.Data.ToObject<RepairOrderCreatedDataModel>();
 
-                    return new UpdateRepairOrderCommand
+                        return new CreateRepairOrderCommand
+                        {
+                            Id = eventDataModel.Id,
+                            Price = eventDataModel.Price,
+                            CarId = eventDataModel.CarId,
+                            OrderDate = eventDataModel.OrderDate,
+                        };
+                    }
+
+                case RepairOrderEvents.UpdatedEvent:
                     {
-                        Id = eventDataModel.Id,
-                        CarId = eventDataModel.CarId,
-                        OrderDate = eventDataModel.OrderDate,
-                        Price = eventDataModel.Price
-                    };
-                }
-                    
-                case "RepairOrderDeletedEvent":
-                {
-                    var eventDataModel = @event.Data.ToObject<RepairOrderDeletedDataModel>();
+                        var eventDataModel = @event.Data.ToObject<RepairOrderUpdatedDataModel>();
 
-                    return new DeleteRepairOrderCommand { Id = eventDataModel.Id };
-                }
-                
+                        return new UpdateRepairOrderCommand
+                        {
+                            Id = eventDataModel.Id,
+                            CarId = eventDataModel.CarId,
+                            OrderDate = eventDataModel.OrderDate,
+                            Price = eventDataModel.Price
+                        };
+                    }
+
+                case RepairOrderEvents.DeletedEvent:
+                    {
+                        var eventDataModel = @event.Data.ToObject<RepairOrderDeletedDataModel>();
+
+                        return new DeleteRepairOrderCommand { Id = eventDataModel.Id };
+                    }
+
                 default:
                     return null;
             }

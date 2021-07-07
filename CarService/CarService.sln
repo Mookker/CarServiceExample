@@ -17,13 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.Users.Api", "Car
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.RepairOrders.Api", "CarService.RepariOrders.Api\CarService.RepairOrders.Api.csproj", "{2C3E1639-B024-43D2-945D-ACE3C605B12B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.RepairOrders.Messenger", "CarService.RepairOrders.Messenger\CarService.RepairOrders.Messenger.csproj", "{99942BFD-A056-4E5A-8089-0E0624267E43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.EventProcessor", "CarService.RepairOrders.Messenger\CarService.EventProcessor.csproj", "{99942BFD-A056-4E5A-8089-0E0624267E43}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{62F59982-DE30-4FBC-8301-F6970ECB8344}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.Users.Api.Tests", "CarService.Users.Api.Tests\CarService.Users.Api.Tests.csproj", "{8910BEED-EE63-4702-9A25-86D913F5B6E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.Users.Api.Tests", "CarService.Users.Api.Tests\CarService.Users.Api.Tests.csproj", "{8910BEED-EE63-4702-9A25-86D913F5B6E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarService.RepairOrders.Api.Tests", "CarService.RepairOrders.Api.Tests\CarService.RepairOrders.Api.Tests.csproj", "{85161348-0A0F-4E0B-8F65-BCBB8DBC634D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarService.RepairOrders.Api.Tests", "CarService.RepairOrders.Api.Tests\CarService.RepairOrders.Api.Tests.csproj", "{85161348-0A0F-4E0B-8F65-BCBB8DBC634D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

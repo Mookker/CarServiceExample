@@ -1,12 +1,12 @@
-﻿using CarService.Infrastructure.MongoDb;
-using CarService.RepairOrders.Messenger.Cqrs.Commands.Handlers;
-using CarService.RepairOrders.Messenger.Interfaces;
-using CarService.RepairOrders.Messenger.Services;
+﻿using CarService.EventProcessor.Cqrs.Commands.Handlers;
+using CarService.EventProcessor.Interfaces;
+using CarService.EventProcessor.Services;
+using CarService.Infrastructure.MongoDb;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace CarService.RepairOrders.Messenger
+namespace CarService.EventProcessor
 {
     class Program
     {

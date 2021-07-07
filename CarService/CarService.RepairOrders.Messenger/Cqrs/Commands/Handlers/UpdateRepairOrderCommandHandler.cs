@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CarService.RepairOrders.Messenger.Cqrs.Commands.Handlers
+namespace CarService.EventProcessor.Cqrs.Commands.Handlers
 {
     public class UpdateRepairOrderCommandHandler : AsyncRequestHandler<UpdateRepairOrderCommand>
     {

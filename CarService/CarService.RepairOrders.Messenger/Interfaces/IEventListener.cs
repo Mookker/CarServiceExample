@@ -1,4 +1,4 @@
-namespace CarService.RepairOrders.Messenger.Interfaces
+namespace CarService.EventProcessor.Interfaces
 {
     public interface IEventListener
     {

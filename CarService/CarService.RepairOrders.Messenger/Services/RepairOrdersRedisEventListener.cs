@@ -1,6 +1,5 @@
-using CarService.AppCore.Models.EventModels;
 using CarService.AppCore.Models.Events;
-using CarService.RepairOrders.Messenger.Interfaces;
+using CarService.EventProcessor.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -9,7 +8,7 @@ using StackExchange.Redis;
 using System;
 using System.Threading.Tasks;
 
-namespace CarService.RepairOrders.Messenger.Services
+namespace CarService.EventProcessor.Services
 {
     public class RepairOrdersRedisEventListener : IRepairOrdersListener, IDisposable
     {
@@ -21,7 +20,7 @@ namespace CarService.RepairOrders.Messenger.Services
         {
             _mediator = mediator;
             _commandFactory = commandFactory;
-            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
+            var redis = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
             _subscriber = redis.GetSubscriber();
 
             var channel = _subscriber.Subscribe("repairOrders");

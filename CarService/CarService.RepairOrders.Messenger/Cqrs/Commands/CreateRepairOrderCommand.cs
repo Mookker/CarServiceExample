@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarService.RepairOrders.Messenger.Cqrs.Commands
+namespace CarService.EventProcessor.Cqrs.Commands
 {
     public record CreateRepairOrderCommand : IRequest<RepairOrder>
     {

@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.0.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarService.Api.GraphQL\CarService.Api.GraphQL.csproj" />
+    <ProjectReference Include="..\CarService.AppCore\CarService.AppCore.csproj" />
+    <ProjectReference Include="..\CarService.Cqrs\CarService.Cqrs.csproj" />
+    <ProjectReference Include="..\CarService.Domain\CarService.Domain.csproj" />
+    <ProjectReference Include="..\CarService.Infrastructure.MongoDb\CarService.Infrastructure.MongoDb.csproj" />
+    <ProjectReference Include="..\CarService.RepairOrders.Messenger\CarService.RepairOrders.Messenger.csproj" />
+    <ProjectReference Include="..\CarService.RepariOrders.Api\CarService.RepariOrders.Api.csproj" />
+    <ProjectReference Include="..\CarService.Users.Api\CarService.Users.Api.csproj" />
+  </ItemGroup>
+
+</Project>

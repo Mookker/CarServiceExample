@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CarService.RepairOrders.Messenger": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

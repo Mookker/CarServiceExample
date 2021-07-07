@@ -1,13 +1,15 @@
 using System;
 using System.Threading.Tasks;
+using CarService.AppCore.Interfaces;
+using CarService.AppCore.Models.EventModels;
+using CarService.AppCore.Models.Events;
+using CarService.AppCore.Models.Requests;
+using CarService.Domain.Models;
 using CarService.RepariOrders.Api.Interfaces;
-using CarService.RepariOrders.Api.Models.Domain;
-using CarService.RepariOrders.Api.Models.Domain.Events;
-using CarService.RepariOrders.Api.Models.Requests;
 
 namespace CarService.RepariOrders.Api.Services
 {
-    public class RepairOrdersService : IRepairOrdersService
+    public class RepairOrdersService : AppCore.Interfaces.IRepairOrdersService
     {
         private readonly IRepairOrderRepository _repairOrderRepository;
         private readonly IEventPublisher _eventPublisher;
@@ -18,51 +20,81 @@ namespace CarService.RepariOrders.Api.Services
             _eventPublisher = eventPublisher;
         }
 
-        public async Task<RepairOrder> CreateRepairOrder(CreateRepairModelRequest order)
+        public async Task<RepairOrder> CreateAsync(CreateRepairOrderRequest request)
         {
             var repairOrder = new RepairOrder
             {
-                Id = Guid.NewGuid(),
-                Price = order.Price,
-                CarId = order.CarId,
-                OrderDate = order.OrderDate
+                Id = request.Id,
+                Price = request.Price,
+                CarId = request.CarId,
+                OrderDate = request.OrderDate
             };
 
             await _repairOrderRepository.Create(repairOrder);
 
             await _eventPublisher.PublishEvent("repairOrders", new RepairOrderCreatedEvent
             {
-                RepairOrderId = repairOrder.Id,
-                Price = repairOrder.Price,
-                CarId = repairOrder.CarId,
-                OrderDate = repairOrder.OrderDate
+                Type = nameof(RepairOrderCreatedEvent),
+                Data = new RepairOrderCreatedDataModel
+                {
+                    Id = repairOrder.Id,
+                    CarId = repairOrder.CarId,
+                    Price = repairOrder.Price,
+                    OrderDate = repairOrder.OrderDate
+                }
             });
-
 
             return repairOrder;
         }
 
-        public async Task<RepairOrder> GetRepairOrderByCarId(Guid carId)
+        public async Task DeleteAsync(Guid id)
         {
-            return await _repairOrderRepository.GetByCarId(carId);
-        }
+            await _repairOrderRepository.Delete(id);
 
-        public async Task<RepairOrder> GetRepairOrderById(Guid id)
-        {
-            return await _repairOrderRepository.GetById(id);
-        }
-
-        public async Task UpdateRepairOrder(UpdateRepairOrderRequest order)
-        {
-            var model = new RepairOrder
+            await _eventPublisher.PublishEvent("repairOrders", new RepairOrderDeletedEvent
             {
-                Id = order.Id,
-                Price = order.Price,
-                OrderDate = order.OrderDate,
-                CarId = order.CarId
+                Type = nameof(RepairOrderDeletedEvent),
+                Data = new RepairOrderDeletedDataModel { Id = id }
+            });
+        }
+
+        public async Task<RepairOrder> GetByCarId(Guid carId)
+        {
+            var repairOrder = await _repairOrderRepository.GetByCarId(carId);
+
+            return repairOrder;
+        }
+
+        public async Task<RepairOrder> GetById(Guid id)
+        {
+            var repairOrder = await _repairOrderRepository.GetById(id);
+
+            return repairOrder;
+        }
+
+        public async Task UpdateAsync(UpdateRepairOrderRequest request)
+        {
+            var repairOrder = new RepairOrder
+            {
+                Id = request.Id,
+                CarId = request.CarId,
+                OrderDate = request.OrderDate,
+                Price = request.Price
             };
 
-            await _repairOrderRepository.Update(model);
+            await _repairOrderRepository.Update(repairOrder);
+
+            await _eventPublisher.PublishEvent("repairOrders", new RepairOrderUpdatedEvent
+            {
+                Type = nameof(RepairOrderUpdatedEvent),
+                Data = new RepairOrderUpdatedDataModel
+                {
+                    Id = repairOrder.Id,
+                    CarId = repairOrder.CarId,
+                    Price = repairOrder.Price,
+                    OrderDate = repairOrder.OrderDate
+                }
+            });
         }
     }
 }

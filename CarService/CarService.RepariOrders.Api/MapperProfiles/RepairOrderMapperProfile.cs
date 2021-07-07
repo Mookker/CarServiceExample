@@ -1,5 +1,5 @@
 using AutoMapper;
-using CarService.RepariOrders.Api.Models.Domain;
+using CarService.Domain.Models;
 using CarService.RepariOrders.Api.Models.Responses;
 
 namespace CarService.RepariOrders.Api.MapperProfiles

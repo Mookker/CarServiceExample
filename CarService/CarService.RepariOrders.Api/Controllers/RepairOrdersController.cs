@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using CarService.RepariOrders.Api.Interfaces;
+using CarService.AppCore.Interfaces;
+using CarService.AppCore.Models.Requests;
 using CarService.RepariOrders.Api.Models.Requests;
 using CarService.RepariOrders.Api.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
@@ -19,17 +21,97 @@ namespace CarService.RepariOrders.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateRepairOrder([FromBody]CreateRepairModelRequest createRepairModelRequest)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRepairOrderById(Guid id)
         {
-            if (createRepairModelRequest == null)
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var model = await _repairOrdersService.GetById(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            var response = _mapper.Map<RepairOrderResponse>(model);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRepairOrderByCarId([FromQuery] Guid carId)
+        {
+            if (carId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var model = await _repairOrdersService.GetByCarId(carId);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            var response = _mapper.Map<RepairOrderResponse>(model);
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRepairOrder([FromBody] CreateRepairOrderRequest request)
+        {
+            if (request == null)
             {
                 return BadRequest("Body is missing");
             }
 
-            var result = await _repairOrdersService.CreateRepairOrder(createRepairModelRequest);
+            var result = await _repairOrdersService.CreateAsync(request);
 
             return Ok(_mapper.Map<RepairOrderResponse>(result));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateRepairOrder([FromBody] AppCore.Models.Requests.UpdateRepairOrderRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest();
+            }
+
+            var foundOrder = await _repairOrdersService.GetById(request.Id);
+
+            if (foundOrder == null)
+            {
+                return NotFound();
+            }
+
+            await _repairOrdersService.UpdateAsync(request);
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRepairOrder(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var foudOrder = await _repairOrdersService.GetById(id);
+
+            if (foudOrder == null)
+            {
+                return NotFound();
+            }
+
+            await _repairOrdersService.DeleteAsync(id);
+
+            return Ok();
         }
     }
 }

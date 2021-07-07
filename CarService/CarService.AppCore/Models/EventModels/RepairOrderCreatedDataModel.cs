@@ -1,8 +1,9 @@
+﻿using CarService.AppCore.Interfaces;
 using System;
 
-namespace CarService.RepariOrders.Api.Models.Responses
+namespace CarService.AppCore.Models.EventModels
 {
-    public class RepairOrderResponse
+    public record RepairOrderCreatedDataModel : IBaseEventDataModel
     {
         public Guid Id { get; set; }
         public double Price { get; set; }

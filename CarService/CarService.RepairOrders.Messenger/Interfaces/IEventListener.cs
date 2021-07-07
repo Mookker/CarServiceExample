@@ -1,7 +1,7 @@
-namespace CarService.AppCore.Interfaces
+namespace CarService.EventProcessor.Interfaces
 {
     public interface IEventListener
     {
-        
+
     }
 }

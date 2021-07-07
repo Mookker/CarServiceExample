@@ -1,12 +1,8 @@
-using System;
+using CarService.AppCore.Models.EventModels;
 
 namespace CarService.AppCore.Models.Events
 {
-    public record RepairOrderCreatedEvent: BaseEvent
+    public record RepairOrderCreatedEvent : BaseEvent<RepairOrderCreatedDataModel>
     {
-        public Guid RepairOrderId { get; init; }
-        public double Price { get; init; }
-        public DateTime OrderDate { get; init; }
-        public Guid CarId { get; init; }
     }
 }

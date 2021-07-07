@@ -1,23 +1,23 @@
 using System.Threading.Tasks;
-using CarService.RepariOrders.Api.Interfaces;
-using CarService.RepariOrders.Api.Models.Domain.Events;
+using CarService.AppCore.Interfaces;
+using CarService.AppCore.Models.Events;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
-namespace CarService.RepariOrders.Api.Services
+namespace CarService.AppCore.Services
 {
-    public class EventPublisher: IEventPublisher
+    public class RedisEventPublisher: IEventPublisher
     {
         private readonly ISubscriber _publisher;
 
-        public EventPublisher(IConfiguration configuration)
+        public RedisEventPublisher(IConfiguration configuration)
         {
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
             _publisher = redis.GetSubscriber();
         }
 
-        public Task PublishEvent<T>(string topic, T @event) where T: BaseEvent
+        public Task PublishEvent<T>(string topic, BaseEvent<T> @event) where T : class
         {
             return _publisher.PublishAsync(topic, JsonConvert.SerializeObject(@event));
         }

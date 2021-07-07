@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using CarService.RepariOrders.Api.Models.Domain;
+using CarService.Domain.Models;
 
 namespace CarService.RepariOrders.Api.Interfaces
 {
@@ -9,7 +9,7 @@ namespace CarService.RepariOrders.Api.Interfaces
         public Task Create(RepairOrder order);
         public Task<RepairOrder> GetById(Guid id);
         public Task<RepairOrder> GetByCarId(Guid carId);
-        public Task Delete(RepairOrder order);
+        public Task Delete(Guid id);
         public Task Update(RepairOrder order);
     }
 }

@@ -1,6 +1,7 @@
 using CarService.RepariOrders.Api.Interfaces;
 using CarService.RepariOrders.Api.Repositories;
 using CarService.RepariOrders.Api.Services;
+using CarService.AppCore.Interfaces;
 using Dapper.Extensions.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using CarService.AppCore.Services;
 
 namespace CarService.RepariOrders.Api
 {
@@ -25,8 +27,8 @@ namespace CarService.RepariOrders.Api
         {
             services.AddDapperForPostgreSQL();
             services.AddScoped<IRepairOrderRepository, RepairOrderRepository>();
-            services.AddScoped<IRepairOrdersService, RepairOrdersService>();
-            services.AddSingleton<IEventPublisher, EventPublisher>();
+            services.AddScoped<AppCore.Interfaces.IRepairOrdersService, CarService.RepariOrders.Api.Services.RepairOrdersService>();
+            services.AddSingleton<IEventPublisher, RedisEventPublisher>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

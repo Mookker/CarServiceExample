@@ -21,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarService.RepairOrders.Messenger\CarService.EventProcessor.csproj" />
+    <ProjectReference Include="..\..\CarService.AppCore\CarService.AppCore.csproj" />
+    <ProjectReference Include="..\..\CarService.Cqrs\CarService.Cqrs.csproj" />
   </ItemGroup>
 
 </Project>

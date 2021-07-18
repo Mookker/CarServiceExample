@@ -17,7 +17,7 @@ namespace CarService.AppCore.Services
             _publisher = redis.GetSubscriber();
         }
 
-        public Task PublishEvent<T>(string topic, BaseEvent<T> @event) where T : class
+        public Task<long> PublishEvent<T>(string topic, BaseEvent<T> @event) where T : class
         {
             return _publisher.PublishAsync(topic, JsonConvert.SerializeObject(@event));
         }

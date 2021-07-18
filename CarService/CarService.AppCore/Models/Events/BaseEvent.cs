@@ -13,7 +13,7 @@ namespace CarService.AppCore.Models.Events
         public virtual string Type { get; init; }
         public virtual T Data { get; init; }
 
-        protected BaseEvent()
+        public BaseEvent()
         {
             Id = Guid.NewGuid();
             CreatedDate = DateTime.UtcNow;

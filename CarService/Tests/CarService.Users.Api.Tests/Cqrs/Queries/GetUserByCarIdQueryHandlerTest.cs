@@ -27,7 +27,7 @@ namespace CarService.Users.Api.Tests.Cqrs.Queries
         public async Task Handler_Should_Handle_Query_And_Return_UserByCarId()
         {
             // Arrange
-            var carId = Guid.Parse("a7e39df3-3fe4-4944-81f1-8c013687f8cb");
+            var carId = Guid.NewGuid();
             _repository.Setup(r => r.GetByCarId(It.IsAny<Guid>())).ReturnsAsync(new User { CarId = carId });
 
             // Act

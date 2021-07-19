@@ -27,20 +27,24 @@ namespace CarService.EventProcessor.Tests.Services
         public void Factory_Should_Return_CreateRepairOrderCommand()
         {
             // Arrange
-            string jsonData = @"{
-                                 'Type': 'RepairOrderCreatedEvent', 
-                                 'Data': {
-                                     'id' : 'ac307cca-0430-49b4-bbbf-dc59c8cbb177',
-                                     'price' : 100,
-                                     'orderDate' : '2021-06-17T00:00:00.000Z',
-                                     'carId' : '35992974-21ea-4f61-b715-2dfaed663b73'
-                                  }
-                                }";
+            var @event = new RepairOrderCreatedEvent
+            {
+                Type = nameof(RepairOrderCreatedEvent),
+                Data = new RepairOrderCreatedDataModel
+                {
+                    Id = default,
+                    CarId = default,
+                    OrderDate = default,
+                    Price = 0
+                }
+            };
 
-            var @event = JsonConvert.DeserializeObject<BaseEvent<JObject>>(jsonData);
+            string jsonData = JsonConvert.SerializeObject(@event);
+
+            var deserializedEvent = JsonConvert.DeserializeObject<BaseEvent<JObject>>(jsonData);
 
             // Act
-            var command = _factory.CreateCommand(@event);
+            var command = _factory.CreateCommand(deserializedEvent);
 
             // Assert
             Assert.NotNull(command);
@@ -51,15 +55,18 @@ namespace CarService.EventProcessor.Tests.Services
         public void Factory_Should_Return_DeleteRepairOrderCommand()
         {
             // Arrange
-            string jsonData = @"{
-                                 'Type': 'RepairOrderDeletedEvent', 
-                                 'Data': {'id' : 'ac307cca-0430-49b4-bbbf-dc59c8cbb177'}
-                                }";
+            var @event = new RepairOrderDeletedEvent
+            {
+                Type = nameof(RepairOrderDeletedEvent),
+                Data = new RepairOrderDeletedDataModel { Id = default }
+            };
 
-            var @event = JsonConvert.DeserializeObject<BaseEvent<JObject>>(jsonData);
+            string jsonData = JsonConvert.SerializeObject(@event);
+
+            var deserializedEvent = JsonConvert.DeserializeObject<BaseEvent<JObject>>(jsonData);
 
             // Act
-            var command = _factory.CreateCommand(@event);
+            var command = _factory.CreateCommand(deserializedEvent);
 
             // Assert
             Assert.NotNull(command);
@@ -70,20 +77,24 @@ namespace CarService.EventProcessor.Tests.Services
         public void Factory_Should_Return_UpdateRepairOrderCommand()
         {
             // Arrange
-            string jsonData = @"{
-                                 'Type': 'RepairOrderUpdatedEvent', 
-                                 'Data': {
-                                     'id' : 'ac307cca-0430-49b4-bbbf-dc59c8cbb177',
-                                     'price' : 100,
-                                     'orderDate' : '2021-06-17T00:00:00.000Z',
-                                     'carId' : '35992974-21ea-4f61-b715-2dfaed663b73'
-                                  }
-                                }";
+            var @event = new RepairOrderUpdatedEvent
+            {
+                Type = nameof(RepairOrderUpdatedEvent),
+                Data = new RepairOrderUpdatedDataModel
+                {
+                    Id = default,
+                    CarId = default,
+                    OrderDate = default,
+                    Price = 0
+                }
+            };
 
-            var @event = JsonConvert.DeserializeObject<BaseEvent<JObject>>(jsonData);
+            string jsonData = JsonConvert.SerializeObject(@event);
+
+            var deserializedEvent = JsonConvert.DeserializeObject<BaseEvent<JObject>>(jsonData);
 
             // Act
-            var command = _factory.CreateCommand(@event);
+            var command = _factory.CreateCommand(deserializedEvent);
 
             // Assert
             Assert.NotNull(command);

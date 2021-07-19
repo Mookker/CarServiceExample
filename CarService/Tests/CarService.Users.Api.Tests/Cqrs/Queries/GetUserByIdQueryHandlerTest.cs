@@ -27,14 +27,14 @@ namespace CarService.Users.Api.Tests.Cqrs.Queries
         public async Task Handler_Shoud_Handle_Query_And_Return_UserById()
         {
             // Arrange
-            _repository.Setup(r => r.GetById(It.IsAny<Guid>())).ReturnsAsync(
-                new User { Id = Guid.Parse("a7e39df3-3fe4-4944-81f1-8c013687f8cb") });
+            var userId = Guid.NewGuid();
+            _repository.Setup(r => r.GetById(It.IsAny<Guid>())).ReturnsAsync(new User { Id = userId });
 
             // Act
-            var user = await _handler.Handle(new GetUserByIdQuery("a7e39df3-3fe4-4944-81f1-8c013687f8cb"), default);
+            var user = await _handler.Handle(new GetUserByIdQuery(userId.ToString()), default);
 
             // Assert
-            Assert.Equal(user.Id, Guid.Parse("a7e39df3-3fe4-4944-81f1-8c013687f8cb"));
+            Assert.Equal(userId, user.Id);
         }
     }
 }

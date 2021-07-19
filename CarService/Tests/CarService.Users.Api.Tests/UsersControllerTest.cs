@@ -68,7 +68,7 @@ namespace CarService.Users.Api.Tests
         public async Task Get_User_Should_Return_User_By_Id()
         {
             // Arrange
-            var userId = Guid.Parse("C2314F29-5A95-43C8-B37A-4A3582AE9235");
+            var userId = Guid.NewGuid();
             var user = new UserDto(new User
             {
                 Id = userId,
@@ -94,10 +94,11 @@ namespace CarService.Users.Api.Tests
         public async Task Create_User_Should_Return_Created_User()
         {
             // Arrange
+            var carId = Guid.NewGuid();
             var userDto = new UserDto(new User
             {
                 Id = Guid.NewGuid(),
-                CarId = Guid.Parse("73fdffd5-d192-4251-9dc1-a0693e28632c"),
+                CarId = carId,
                 DoB = DateTime.MinValue,
                 FirstName = "Test",
                 LastName = "Test"
@@ -107,7 +108,7 @@ namespace CarService.Users.Api.Tests
 
             var userRequest = new CreateUserRequest
             {
-                CarId = Guid.Parse("73fdffd5-d192-4251-9dc1-a0693e28632c"),
+                CarId = carId,
                 DoB = DateTime.MinValue,
                 FirstName = "Test",
                 LastName = "Test"

@@ -24,19 +24,21 @@ namespace CarService.Users.Api.Tests.Cqrs.Commands
         public async Task UpdateUserCommandHandler_Should_Handle_Command_And_Return_UserDto()
         {
             // Arrange
+            var userId = Guid.NewGuid();
+            var carId = Guid.NewGuid();
+            const string TEST_NAME = "Test";
             var updatedUser = new User
             {
-                Id = Guid.Parse("b699d106-70ef-4b42-9353-fec5ee1f43cd"),
-                CarId = Guid.Parse("b699d106-70ef-4b42-9353-fec5ee1f43cd"),
+                Id = userId,
+                CarId = carId,
                 DoB = DateTime.MinValue,
-                FirstName = "Test",
-                LastName = "Test"
+                FirstName = TEST_NAME,
+                LastName = TEST_NAME
             };
 
             _usersRepository.Setup(r => r.GetById(It.IsAny<Guid>())).ReturnsAsync(updatedUser);
 
-            var command = new UpdateUserCommand(Guid.Parse("b699d106-70ef-4b42-9353-fec5ee1f43cd"), "Test", 
-                "Test", DateTime.MinValue, Guid.Parse("b699d106-70ef-4b42-9353-fec5ee1f43cd"));
+            var command = new UpdateUserCommand(userId, TEST_NAME, TEST_NAME, DateTime.MinValue, carId);
 
             // Act
             var result = await _handler.Handle(command, default);

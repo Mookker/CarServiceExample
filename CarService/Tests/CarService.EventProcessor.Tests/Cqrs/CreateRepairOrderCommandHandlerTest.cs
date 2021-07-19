@@ -46,8 +46,7 @@ namespace CarService.EventProcessor.Tests.Cqrs
             var result = await _handler.Handle(command, default);
 
             // Assert
-            Assert.True(result.Id == repairOrder.Id && result.CarId == repairOrder.CarId
-                && result.OrderDate == repairOrder.OrderDate && result.Price == repairOrder.Price);
+            Assert.Equal(repairOrder, result);
         }
     }
 }

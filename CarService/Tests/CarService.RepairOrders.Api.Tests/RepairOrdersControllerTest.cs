@@ -34,7 +34,7 @@ namespace CarService.RepairOrders.Api.Tests
         public async Task Controller_Should_Return_RepairOrderById()
         {
             // Arrange
-            var id = Guid.Parse("a7e39df3-3fe4-4944-81f1-8c013687f8cb");
+            var id = Guid.NewGuid();
             _service.Setup(s => s.GetById(It.IsAny<Guid>())).ReturnsAsync(new RepairOrder { Id = id });
 
             // Act
@@ -50,7 +50,7 @@ namespace CarService.RepairOrders.Api.Tests
         public async Task Controller_Should_Return_RepairOrderByCarId()
         {
             // Arrange
-            var carId = Guid.Parse("a7e39df3-3fe4-4944-81f1-8c013687f8cb");
+            var carId = Guid.NewGuid();
             _service.Setup(s => s.GetByCarId(It.IsAny<Guid>())).ReturnsAsync(new RepairOrder { CarId = carId });
 
             // Act
@@ -79,7 +79,7 @@ namespace CarService.RepairOrders.Api.Tests
         public async Task Controller_Should_Create_RepairOrder()
         {
             // Arrange
-            var carId = Guid.Parse("a7e39df3-3fe4-4944-81f1-8c013687f8cb");
+            var carId = Guid.NewGuid();
             var request = new CreateRepairOrderRequest { Price = 100, OrderDate = DateTime.MinValue, CarId = carId };
             var repairOrder = new RepairOrder
             {

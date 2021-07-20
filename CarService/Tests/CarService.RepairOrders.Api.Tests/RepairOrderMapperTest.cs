@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using CarService.RepariOrders.Api.Models.Domain;
+using CarService.Domain.Models;
 
-namespace CarService.Tests.Mappers
+namespace CarService.RepairOrders.Api.Tests
 {
     public class RepairOrderMapperTest
     {

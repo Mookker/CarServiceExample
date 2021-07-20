@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CarService.Tests.Mappers
+namespace CarService.Tests.CarService.Users.Api.Tests
 {
     public class UserMapperTest
     {

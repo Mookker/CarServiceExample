@@ -21,14 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarService.Api.GraphQL\CarService.Api.GraphQL.csproj" />
-    <ProjectReference Include="..\CarService.AppCore\CarService.AppCore.csproj" />
-    <ProjectReference Include="..\CarService.Cqrs\CarService.Cqrs.csproj" />
-    <ProjectReference Include="..\CarService.Domain\CarService.Domain.csproj" />
-    <ProjectReference Include="..\CarService.Infrastructure.MongoDb\CarService.Infrastructure.MongoDb.csproj" />
-    <ProjectReference Include="..\CarService.RepairOrders.Messenger\CarService.RepairOrders.Messenger.csproj" />
-    <ProjectReference Include="..\CarService.RepariOrders.Api\CarService.RepariOrders.Api.csproj" />
-    <ProjectReference Include="..\CarService.Users.Api\CarService.Users.Api.csproj" />
+    <ProjectReference Include="..\..\CarService.AppCore\CarService.AppCore.csproj" />
+    <ProjectReference Include="..\..\CarService.Cqrs\CarService.Cqrs.csproj" />
   </ItemGroup>
 
 </Project>

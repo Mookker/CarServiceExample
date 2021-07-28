@@ -1,0 +1,20 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "composeLaunchServiceName": "carservice.api.graphql",
+      "serviceActions": {
+        "carservice.api.graphql": "StartDebugging",
+        "carservice.eventprocessor": "StartDebugging",
+        "carservice.mongo": "StartWithoutDebugging",
+        "carservice.postgres": "StartWithoutDebugging",
+        "carservice.redis": "StartWithoutDebugging",
+        "carservice.repairorders.api": "StartDebugging",
+        "carservice.users.api": "StartDebugging"
+      },
+      "composeLaunchAction": "LaunchBrowser",
+      "commandVersion": "1.0",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/ui/playground"
+    }
+  }
+}

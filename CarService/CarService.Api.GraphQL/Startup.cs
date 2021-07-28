@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using CarService.AppCore.Services;
+using CarService.Cqrs.Queries.Handlers;
 
 namespace CarService.Api.GraphQL
 {
@@ -51,7 +52,7 @@ namespace CarService.Api.GraphQL
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
                 .AddSystemTextJson();
 
-            services.AddMediatR(typeof(GetCarQueryById));
+            services.AddMediatR(typeof(GetCarQueryHandler));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +63,8 @@ namespace CarService.Api.GraphQL
 
             // use graphql-playground at default url /ui/playground
             app.UseGraphQLPlayground();
+
+            //app.UseHttpsRedirection();
         }
     }
 }

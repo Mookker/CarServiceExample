@@ -18,8 +18,12 @@ namespace CarService.Infrastructure.MongoDb
                  new MongoClient(new MongoClientSettings()
                  {
                      GuidRepresentation = GuidRepresentation.Standard,
-                     Server = new MongoServerAddress(configuration.GetConnectionString("MongoDBServer"), 
-                        int.Parse(configuration.GetConnectionString("MongoDBPort")))
+                     // Configuration for docker-compose
+                     Server = new MongoServerAddress(configuration.GetConnectionString("MongoDBServer"))
+
+                     // Configuration for localhost
+                     //Server = new MongoServerAddress(configuration.GetConnectionString("MongoDBServer"), 
+                     //  int.Parse(configuration.GetConnectionString("MongoDBPort")))
                  })
             );
             services.AddScoped<ICarsRepository, CarsRepository>();

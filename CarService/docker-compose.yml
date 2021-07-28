@@ -1,0 +1,110 @@
+version: '3.4'
+
+services:
+  carservice.api.graphql:
+    image: ${DOCKER_REGISTRY-}carserviceapigraphql
+    container_name: graphql.api
+    build:
+      context: .
+      dockerfile: CarService.Api.GraphQL/Dockerfile
+    ports:
+      - "5001:80" 
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Testing123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/CarService.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro 
+    depends_on:
+      - carservice.repairorders.api
+      - carservice.users.api
+    networks:
+      - carservice
+
+
+  carservice.repairorders.api:
+    image: ${DOCKER_REGISTRY-}carservicerepairordersapi
+    container_name: repairorders.api
+    build:
+      context: .
+      dockerfile: CarService.RepariOrders.Api/Dockerfile
+    ports:
+      - "5102:80" 
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=Testing123
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/CarService.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro 
+    depends_on:
+      - carservice.mongo
+      - carservice.redis
+    networks:
+      - carservice
+
+
+  carservice.users.api:
+    image: ${DOCKER_REGISTRY-}carserviceusersapi
+    container_name: users.api
+    build:
+      context: .
+      dockerfile: CarService.Users.Api/Dockerfile
+    ports:
+      - "5101:80" 
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=Testing123
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/CarService.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro 
+    depends_on:
+      - carservice.postgres
+    networks:
+      - carservice
+
+
+  carservice.eventprocessor:
+    image: ${DOCKER_REGISTRY-}carserviceeventprocessor
+    container_name: eventprocessor
+    build:
+      context: .
+      dockerfile: CarService.RepairOrders.Messenger/Dockerfile
+    depends_on:
+      - carservice.mongo
+      - carservice.redis
+    networks:
+      - carservice
+
+
+  carservice.mongo:
+    image: mongo
+    container_name: mongo
+    ports: 
+      - "27888:27017"
+    networks:
+      - carservice
+
+
+  carservice.redis:
+    image: redis
+    container_name: redis
+    ports: 
+      - "6379:6379"
+    networks:
+      - carservice
+
+
+  carservice.postgres:
+    image: postgres
+    container_name: postgres
+    ports: 
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: Testing123
+    networks:
+      - carservice
+
+
+networks:
+  carservice:
+    driver: bridge

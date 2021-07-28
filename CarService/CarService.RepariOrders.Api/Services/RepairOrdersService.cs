@@ -24,7 +24,7 @@ namespace CarService.RepariOrders.Api.Services
         {
             var repairOrder = new RepairOrder
             {
-                Id = request.Id,
+                Id = Guid.NewGuid(),
                 Price = request.Price,
                 CarId = request.CarId,
                 OrderDate = request.OrderDate

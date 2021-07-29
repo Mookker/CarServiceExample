@@ -10,7 +10,7 @@ services:
     ports:
       - "5001:80" 
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_Kestrel__Certificates__Default__Password=Testing123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/CarService.pfx
     volumes:
@@ -31,7 +31,7 @@ services:
     ports:
       - "5102:80" 
     environment:
-     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_ENVIRONMENT=Production
      - ASPNETCORE_Kestrel__Certificates__Default__Password=Testing123
      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/CarService.pfx
     volumes:
@@ -52,7 +52,7 @@ services:
     ports:
       - "5101:80" 
     environment:
-     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_ENVIRONMENT=Production
      - ASPNETCORE_Kestrel__Certificates__Default__Password=Testing123
      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/CarService.pfx
     volumes:
@@ -80,7 +80,7 @@ services:
     image: mongo
     container_name: mongo
     ports: 
-      - "27888:27017"
+      - "27017:27017"
     networks:
       - carservice
 

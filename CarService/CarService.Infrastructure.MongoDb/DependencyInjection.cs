@@ -3,8 +3,6 @@ using CarService.Infrastructure.MongoDb.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 
 namespace CarService.Infrastructure.MongoDb
@@ -18,12 +16,7 @@ namespace CarService.Infrastructure.MongoDb
                  new MongoClient(new MongoClientSettings()
                  {
                      GuidRepresentation = GuidRepresentation.Standard,
-                     // Configuration for docker-compose
                      Server = new MongoServerAddress(configuration.GetConnectionString("MongoDBServer"))
-
-                     // Configuration for localhost
-                     //Server = new MongoServerAddress(configuration.GetConnectionString("MongoDBServer"), 
-                     //  int.Parse(configuration.GetConnectionString("MongoDBPort")))
                  })
             );
             services.AddScoped<ICarsRepository, CarsRepository>();

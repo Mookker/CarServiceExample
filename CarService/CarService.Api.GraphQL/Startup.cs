@@ -1,22 +1,17 @@
-using System;
 using CarService.Api.GraphQL.GraphQL.Mutations;
 using CarService.Api.GraphQL.GraphQL.Queries;
 using CarService.Api.GraphQL.GraphQL.Schemas;
 using CarService.Api.GraphQL.GraphQL.Types;
 using CarService.AppCore;
-using CarService.AppCore.Constants;
-using CarService.AppCore.Interfaces;
-using CarService.Cqrs.Queries;
+using CarService.Cqrs.Queries.Handlers;
 using CarService.Infrastructure.MongoDb;
 using GraphQL.Server;
 using GraphQL.Types;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MediatR;
-using CarService.AppCore.Services;
-using CarService.Cqrs.Queries.Handlers;
 
 namespace CarService.Api.GraphQL
 {
@@ -63,8 +58,6 @@ namespace CarService.Api.GraphQL
 
             // use graphql-playground at default url /ui/playground
             app.UseGraphQLPlayground();
-
-            //app.UseHttpsRedirection();
         }
     }
 }

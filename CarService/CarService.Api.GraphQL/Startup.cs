@@ -1,21 +1,17 @@
-using System;
 using CarService.Api.GraphQL.GraphQL.Mutations;
 using CarService.Api.GraphQL.GraphQL.Queries;
 using CarService.Api.GraphQL.GraphQL.Schemas;
 using CarService.Api.GraphQL.GraphQL.Types;
 using CarService.AppCore;
-using CarService.AppCore.Constants;
-using CarService.AppCore.Interfaces;
-using CarService.Cqrs.Queries;
+using CarService.Cqrs.Queries.Handlers;
 using CarService.Infrastructure.MongoDb;
 using GraphQL.Server;
 using GraphQL.Types;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MediatR;
-using CarService.AppCore.Services;
 
 namespace CarService.Api.GraphQL
 {
@@ -51,7 +47,7 @@ namespace CarService.Api.GraphQL
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
                 .AddSystemTextJson();
 
-            services.AddMediatR(typeof(GetCarQueryById));
+            services.AddMediatR(typeof(GetCarQueryHandler));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

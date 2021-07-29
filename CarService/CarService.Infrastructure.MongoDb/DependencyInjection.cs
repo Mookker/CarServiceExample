@@ -3,8 +3,6 @@ using CarService.Infrastructure.MongoDb.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 
 namespace CarService.Infrastructure.MongoDb
@@ -18,8 +16,7 @@ namespace CarService.Infrastructure.MongoDb
                  new MongoClient(new MongoClientSettings()
                  {
                      GuidRepresentation = GuidRepresentation.Standard,
-                     Server = new MongoServerAddress(configuration.GetConnectionString("MongoDBServer"), 
-                        int.Parse(configuration.GetConnectionString("MongoDBPort")))
+                     Server = new MongoServerAddress(configuration.GetConnectionString("MongoDBServer"))
                  })
             );
             services.AddScoped<ICarsRepository, CarsRepository>();

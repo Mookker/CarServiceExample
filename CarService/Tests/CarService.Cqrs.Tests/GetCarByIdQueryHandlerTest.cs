@@ -9,15 +9,15 @@ using Xunit;
 
 namespace CarService.Cqrs.Tests
 {
-    public class GetCarQueryHandlerTest
+    public class GetCarByIdQueryHandlerTest
     {
         private readonly Mock<ICarsRepository> _repository;
-        private readonly GetCarQueryHandler _handler;
+        private readonly GetCarByIdQueryHandler _handler;
 
-        public GetCarQueryHandlerTest()
+        public GetCarByIdQueryHandlerTest()
         {
             _repository = new Mock<ICarsRepository>();
-            _handler = new GetCarQueryHandler(_repository.Object);
+            _handler = new GetCarByIdQueryHandler(_repository.Object);
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace CarService.Cqrs.Tests
                 Year = default
             };
 
-            var query = new GetCarQueryById(Guid.Empty);
+            var query = new GetCarByIdQuery(Guid.Empty);
 
             _repository.Setup(r => r.GetById(It.IsAny<Guid>())).ReturnsAsync(car);
 

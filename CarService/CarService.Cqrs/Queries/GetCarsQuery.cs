@@ -1,0 +1,14 @@
+﻿using CarService.Domain.Models;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarService.Cqrs.Queries
+{
+    public class GetCarsQuery : IRequest<IEnumerable<Car>>
+    {
+    }
+}

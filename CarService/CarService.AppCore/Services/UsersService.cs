@@ -1,11 +1,11 @@
-using System.Threading.Tasks;
-using CarService.AppCore.Interfaces;
-using System.Net.Http;
-using System.Net.Http.Json;
 using CarService.AppCore.Constants;
-using CarService.AppCore.Models;
+using CarService.AppCore.Interfaces;
 using CarService.AppCore.Models.Requests;
 using CarService.Domain.Models;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace CarService.AppCore.Services
 {
@@ -17,9 +17,9 @@ namespace CarService.AppCore.Services
         {
             _client = httpClientFactory.CreateClient(HttpClientNames.UsersClient);
         }
-        public Task<CarOwner> GetUserById(string userId)
+        public async Task<CarOwner> GetUserById(string userId)
         {
-            return _client.GetFromJsonAsync<CarOwner>($"api/v1/users/{userId}");
+            return await _client.GetFromJsonAsync<CarOwner>($"api/v1/users/{userId}");
         }
 
         public async Task<CarOwner> CreateUser(CreateCarOwnerRequest request)
@@ -48,6 +48,11 @@ namespace CarService.AppCore.Services
         {
             var result = await _client.DeleteAsync($"api/v1/users/{userId}");
             result.EnsureSuccessStatusCode();
+        }
+
+        public async Task<IEnumerable<CarOwner>> GetUsers()
+        {
+            return await _client.GetFromJsonAsync<IEnumerable<CarOwner>>($"api/v1/users");
         }
     }
 }

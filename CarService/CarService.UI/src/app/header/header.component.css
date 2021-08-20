@@ -1,0 +1,28 @@
+header h1 {
+  font-size: 16px;
+  padding-left: 10px;
+}
+
+header {
+  margin: 0;
+  margin-bottom: 25px;
+}
+
+:host
+  ::ng-deep
+  .nav-menu
+  .p-tabmenu
+  .p-tabmenu-nav
+  .p-tabmenuitem
+  .p-menuitem-link {
+  border: none;
+}
+
+:host
+  ::ng-deep
+  .p-tabmenu
+  .p-tabmenu-nav
+  .p-tabmenuitem
+  .p-menuitem-link:not(.p-disabled):focus {
+  box-shadow: none;
+}

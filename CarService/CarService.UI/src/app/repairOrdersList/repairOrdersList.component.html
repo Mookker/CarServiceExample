@@ -1,0 +1,17 @@
+<p-dataView [value]="repairOrders" layout="grid" [loading]="isLoading">
+  <ng-template pTemplate="header">
+    List of Repair Orders
+  </ng-template>
+  <ng-template let-order pTemplate="gridItem">
+    <div class="order-card p-col-12 p-md-3">
+      <p-card header="{{order.car.make}} {{order.car.model}} {{order.car.year}}" subheader="{{order.price}} $">
+        <ng-template pTemplate="content" [style]="{'padding-top': '0'}">
+          <p>VIN: {{order.car.vin}}</p>
+          <p>Millage: {{order.car.millage}}</p>
+          <p>Order date: {{order.orderDate | date}}</p>
+          <p-button (onClick)="doneRepirOrderClickHandler(order)" label="Done" icon="pi pi-check" iconPos="left"></p-button>
+        </ng-template>
+      </p-card>
+    </div>
+  </ng-template>
+</p-dataView>

@@ -17,9 +17,9 @@ namespace CarService.AppCore.Services
         {
             _client = httpClientFactory.CreateClient(HttpClientNames.UsersClient);
         }
-        public async Task<CarOwner> GetUserById(string userId)
+        public Task<CarOwner> GetUserById(string userId)
         {
-            return await _client.GetFromJsonAsync<CarOwner>($"api/v1/users/{userId}");
+            return _client.GetFromJsonAsync<CarOwner>($"api/v1/users/{userId}");
         }
 
         public async Task<CarOwner> CreateUser(CreateCarOwnerRequest request)
@@ -50,9 +50,9 @@ namespace CarService.AppCore.Services
             result.EnsureSuccessStatusCode();
         }
 
-        public async Task<IEnumerable<CarOwner>> GetUsers()
+        public Task<IEnumerable<CarOwner>> GetUsers()
         {
-            return await _client.GetFromJsonAsync<IEnumerable<CarOwner>>($"api/v1/users");
+            return _client.GetFromJsonAsync<IEnumerable<CarOwner>>($"api/v1/users");
         }
     }
 }

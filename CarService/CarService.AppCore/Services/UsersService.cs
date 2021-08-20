@@ -1,11 +1,11 @@
-using System.Threading.Tasks;
-using CarService.AppCore.Interfaces;
-using System.Net.Http;
-using System.Net.Http.Json;
 using CarService.AppCore.Constants;
-using CarService.AppCore.Models;
+using CarService.AppCore.Interfaces;
 using CarService.AppCore.Models.Requests;
 using CarService.Domain.Models;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace CarService.AppCore.Services
 {
@@ -48,6 +48,11 @@ namespace CarService.AppCore.Services
         {
             var result = await _client.DeleteAsync($"api/v1/users/{userId}");
             result.EnsureSuccessStatusCode();
+        }
+
+        public Task<IEnumerable<CarOwner>> GetUsers()
+        {
+            return _client.GetFromJsonAsync<IEnumerable<CarOwner>>($"api/v1/users");
         }
     }
 }

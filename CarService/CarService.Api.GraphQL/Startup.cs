@@ -47,12 +47,16 @@ namespace CarService.Api.GraphQL
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
                 .AddSystemTextJson();
 
-            services.AddMediatR(typeof(GetCarQueryHandler));
+            services.AddMediatR(typeof(GetCarByIdQueryHandler));
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             // add http for Schema at default url /graphql
             app.UseGraphQL<ISchema>();
 

@@ -5,6 +5,7 @@ using CarService.Domain.Models;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
+using System;
 
 namespace CarService.Api.GraphQL.GraphQL.Mutations
 {
@@ -40,6 +41,11 @@ namespace CarService.Api.GraphQL.GraphQL.Mutations
                     var car = context.GetArgument<Car>("car");
                     return mediator.Send(new CreateCarCommand(car));
                 });
+
+            Field<GuidGraphType>("deleteRepairOrder",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<GuidGraphType>>
+                { Name = "id" }),
+                resolve: context => mediator.Send(new DeleteRepairOrderCommand(context.GetArgument<Guid>("id"))));
         }
     }
 }

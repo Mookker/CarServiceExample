@@ -94,7 +94,7 @@ namespace CarService.RepariOrders.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRepairOrder(Guid id)
         {
             if (id == Guid.Empty)

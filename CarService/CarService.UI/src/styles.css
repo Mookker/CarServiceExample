@@ -8,16 +8,3 @@ body {
   color: #e2e4e6;
   opacity: 0.9;
 }
-
-:host
-  :ng-deep
-  .nav-menu
-  .p-tabmenu
-  .p-tabmenu-nav
-  .p-tabmenuitem
-  .p-menuitem-link {
-  border: none !important;
-  background-color: red;
-  content: none;
-  display: none;
-}

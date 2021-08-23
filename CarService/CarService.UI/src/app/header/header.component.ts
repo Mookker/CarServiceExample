@@ -16,7 +16,8 @@ export class HeaderComponent implements OnInit {
       {label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/']},
       {label: 'Repair Orders', icon: 'pi pi-fw pi-table', routerLink: ['/orders']},
       {label: 'Create an Order', icon: 'pi pi-fw pi-shopping-cart', routerLink: ['/createOrder']},
-      {label: 'Add a Car', icon: 'pi pi-fw pi-plus', routerLink: ['/addCar']}
+      {label: 'Add a Car', icon: 'pi pi-fw pi-plus', routerLink: ['/addCar']},
+      {label: 'Add an Owner', icon: 'pi pi-fw pi-user-plus', routerLink: ['/addOwner']}
     ];
    }
 

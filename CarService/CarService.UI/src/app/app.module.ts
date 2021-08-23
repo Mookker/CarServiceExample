@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { CreateOrderFormModule } from './createOrderForm/createOrderForm.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AddCarFormModule } from './addCarForm/addCarForm.module';
+import { AddOwnerFormModule } from './addOwnerForm/addOwnerForm.module';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { AddCarFormModule } from './addCarForm/addCarForm.module';
     CreateOrderFormModule,
     RepairOrdersListModule,
     AddCarFormModule,
+    AddOwnerFormModule,
     GraphQLModule,
     HttpClientModule,
   ],

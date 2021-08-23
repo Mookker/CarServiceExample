@@ -1,6 +1,7 @@
 export interface CarOwner {
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
-  doB: Date
+  doB: Date;
+  carId?: string;
 }

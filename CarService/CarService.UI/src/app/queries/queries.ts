@@ -48,6 +48,14 @@ export const createCarMutation = gql`
   }
 `;
 
+export const createCarOwnerMutation = gql`
+  mutation createOwner($carOwner: CreateCarOwnerType!) {
+    createOwner(carOwner: $carOwner) {
+      id
+    }
+  }
+`;
+
 export const deleteRepairOrderMutation = gql`
   mutation deleteRepairOrder($id: Guid!) {
     deleteRepairOrder(id: $id)

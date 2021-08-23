@@ -1,0 +1,18 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <h2>Add Car Owner</h2>
+  </ng-template>
+  <h3>Enter First Name</h3>
+  <input type="text" pInputText [(ngModel)]="firstName" placeholder="First Name">
+  <h3>Enter Last Name</h3>
+  <input type="text" pInputText [(ngModel)]="lastName" placeholder="Last Name">
+  <h3>Select Birthday</h3>
+  <p-calendar [(ngModel)]="doB" dateFormat="dd.mm.yy" [maxDate]="maxDate" [defaultDate]="maxDate"
+    placeholder="Birthday">
+  </p-calendar>
+  <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+  <p-button (onClick)="handleAddButtonClick()" label="Add Car Owner" icon="pi pi-check" iconPos="left" style="display: block;"
+    [disabled]="!firstName || !lastName || !doB">
+  </p-button>
+</p-card>
+<p-toast></p-toast>

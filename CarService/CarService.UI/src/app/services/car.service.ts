@@ -1,12 +1,13 @@
 import { GetAllCars } from './../queries/getAllCars';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { createCarMutation, createRepairOrderMutation, deleteRepairOrderMutation, getCarOwnersQuery, getCarsQuery, getRepairOrdersQuery } from '../queries/queries';
+import { createCarMutation, createCarOwnerMutation, createRepairOrderMutation, deleteRepairOrderMutation, getCarOwnersQuery, getCarsQuery, getRepairOrdersQuery } from '../queries/queries';
 import { GetAllRepairOrders } from '../queries/getAllRepairOrders';
 import { RepairOrder } from '../models/repairOrder';
 import { CreateRepairOrder } from '../queries/createRepairOrder';
 import { GetAllCarOwners } from '../queries/getAllCarOwners';
 import { Car } from '../models/car';
+import { CarOwner } from '../models/carOwner';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,14 @@ export class CarService {
     return this.apollo.mutate({
       mutation: createCarMutation,
       variables: { car }
+    })
+    .subscribe();
+  }
+
+  createCarOwner(carOwner: CarOwner) {
+    return this.apollo.mutate({
+      mutation: createCarOwnerMutation,
+      variables: { carOwner }
     })
     .subscribe();
   }

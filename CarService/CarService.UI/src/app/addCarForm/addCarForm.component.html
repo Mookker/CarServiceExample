@@ -1,0 +1,26 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <h2>Add Car</h2>
+  </ng-template>
+  <h3>Select Car Brand</h3>
+  <p-dropdown [options]="carBarndSuggestions" [(ngModel)]="carBrand" placeholder="Car Brand"></p-dropdown>
+  <h3>Enter Car Model</h3>
+  <input type="text" pInputText [(ngModel)]="carModel" placeholder="Car Model">
+  <h3>Select year of production</h3>
+  <p-dropdown [options]="years" [(ngModel)]="carYear"></p-dropdown>
+  <h3>Enter Car VIN code</h3>
+  <input [(ngModel)]="carVin" type="text" pInputText placeholder="Car VIN"> 
+  <h3>Enter Car Millage</h3>
+  <p-inputNumber [(ngModel)]="carMillage" suffix=" km"></p-inputNumber>
+  <br>
+  <h3>Select Car Owner</h3>
+  <p-dropdown [options]="carOwnersInfo" [(ngModel)]="carOwnerId" 
+    optionValue="owner.id" optionLabel="info" placeholder="Car Owner">
+  </p-dropdown>
+  <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+  <p-button (onClick)="handleAddCarClick()" label="Add Car" 
+    [disabled]="!carBrand || !carModel || !carYear || !carVin || !carMillage || !carOwnerId" 
+    icon="pi pi-check" iconPos="left" style="display: block;">
+  </p-button>
+</p-card>
+<p-toast></p-toast>

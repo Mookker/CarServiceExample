@@ -1,8 +1,10 @@
-﻿using CarService.EventProcessor.Cqrs.Commands.Handlers;
+﻿using System;
+using CarService.EventProcessor.Cqrs.Commands.Handlers;
 using CarService.EventProcessor.Interfaces;
 using CarService.EventProcessor.Services;
 using CarService.Infrastructure.MongoDb;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -22,6 +24,14 @@ namespace CarService.EventProcessor
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(cfg =>
+                {
+                    string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                    if (!string.IsNullOrWhiteSpace(environment))
+                    {
+                        cfg.AddJsonFile($"appsettings.{environment}.json", optional: false);
+                    }
+                })
                 .ConfigureServices((appContext, services) =>
                     services
                         .AddMongoDb(appContext.Configuration)

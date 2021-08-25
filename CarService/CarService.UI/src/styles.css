@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  background-color: #17212f;
+}
+
+.t-white {
+  color: #e2e4e6;
+  opacity: 0.9;
+}

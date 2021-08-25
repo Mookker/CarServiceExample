@@ -1,0 +1,24 @@
+<form (ngSubmit)="handleCreateClick()">
+  <p-card>
+    <ng-template pTemplate="header">
+      <h2>Create Repair Order</h2>
+    </ng-template>
+    <h3>Select a Car</h3>
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-caret-right"></i></span>
+      <p-dropdown [options]="carsInfo" [(ngModel)]="selectedCar" name="selectedCar" 
+        optionLabel="info" placeholder="Car" [required]="true">
+      </p-dropdown>
+    </div>
+    <h4>Enter Order Price</h4>
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-dollar"></i></span>
+      <p-inputNumber [(ngModel)]="repairOrderPrice" name="price" [min]="10" 
+        mode="decimal" locale="en-US" [minFractionDigits]="2" >
+      </p-inputNumber>
+    </div>
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-button type="submit" label="Create" icon="pi pi-check" iconPos="left" [disabled]="!selectedCar"></p-button>
+  </p-card>
+</form>
+<p-toast></p-toast>

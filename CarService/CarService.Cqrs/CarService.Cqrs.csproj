@@ -10,5 +10,6 @@
     <ItemGroup>
       <ProjectReference Include="..\CarService.AppCore\CarService.AppCore.csproj" />
       <ProjectReference Include="..\CarService.Domain\CarService.Domain.csproj" />
+      <ProjectReference Include="..\CarService.Users.Api\CarService.Users.Api.csproj" />
     </ItemGroup>
 </Project>

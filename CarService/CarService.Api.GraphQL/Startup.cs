@@ -3,8 +3,14 @@ using CarService.Api.GraphQL.GraphQL.Queries;
 using CarService.Api.GraphQL.GraphQL.Schemas;
 using CarService.Api.GraphQL.GraphQL.Types;
 using CarService.AppCore;
+using CarService.AppCore.Interfaces;
+using CarService.AppCore.Services;
+using CarService.Cqrs.Commands;
 using CarService.Cqrs.Queries.Handlers;
 using CarService.Infrastructure.MongoDb;
+using CarService.Users.Api.Interfaces;
+using CarService.Users.Api.Repositories;
+using Dapper.Extensions.PostgreSql;
 using GraphQL.Server;
 using GraphQL.Types;
 using MediatR;
@@ -40,6 +46,10 @@ namespace CarService.Api.GraphQL
             services.AddScoped<CreateCarType>();
             services.AddScoped<ISchema, CarServiceSchema>();
 
+            services.AddDapperForPostgreSQL();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IEventPublisher, RedisEventPublisher>();
+
             services.AddGraphQL(options =>
                 {
                     options.EnableMetrics = true;
@@ -62,6 +72,20 @@ namespace CarService.Api.GraphQL
 
             // use graphql-playground at default url /ui/playground
             app.UseGraphQLPlayground();
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints => 
+            {
+                endpoints.MapPost("/seed", async context =>
+                {
+                    var mediator = context.RequestServices.GetService<IMediator>();
+                    var usersRepo = context.RequestServices.GetService<IUsersRepository>();
+
+                    await mediator.Send(new SeedDataCommand());
+                    context.Response.StatusCode = 200;
+                });
+            });
         }
     }
 }

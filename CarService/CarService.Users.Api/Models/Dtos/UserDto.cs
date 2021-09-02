@@ -1,5 +1,5 @@
-using System;
 using CarService.Users.Api.Models.Domain;
+using System;
 
 namespace CarService.Users.Api.Models.Dtos
 {
@@ -9,6 +9,9 @@ namespace CarService.Users.Api.Models.Dtos
         {
             _ = user ?? throw new ArgumentNullException(nameof(user));
             Id = user.Id;
+            Username = user.Username;
+            Password = user.Password;
+            Roles = user.Roles;
             FirstName = user.FirstName;
             LastName = user.LastName;
             DoB = user.DoB;
@@ -16,6 +19,9 @@ namespace CarService.Users.Api.Models.Dtos
         }
 
         public Guid Id { get; init; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string[] Roles { get; set; }
         public string FirstName { get; init; }
         public string LastName { get; init; }
         public DateTime DoB { get; init; }

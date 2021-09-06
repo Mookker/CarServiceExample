@@ -3,6 +3,7 @@ using CarService.Authentication.Models;
 using CarService.Users.Api.Cqrs.Queries;
 using CarService.Users.Api.Models.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -13,11 +14,16 @@ namespace CarService.Authentication.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IMediator _mediator;
 
-        public AuthController(IAuthenticationService authenticationService, IMediator mediator)
+        public AuthController(
+            IAuthenticationService authenticationService, 
+            IPasswordHasher<User> passwordHasher, 
+            IMediator mediator)
         {
             _authenticationService = authenticationService;
+            _passwordHasher = passwordHasher;
             _mediator = mediator;
         }
 
@@ -36,11 +42,6 @@ namespace CarService.Authentication.Controllers
                 return NotFound("User doesn't exist");
             }
 
-            if (userDto.Password != request.Password)
-            {
-                return Forbid("Wrong password");
-            }
-
             var user = new User
             {
                 Id = userDto.Id,
@@ -52,6 +53,13 @@ namespace CarService.Authentication.Controllers
                 DoB = userDto.DoB,
                 CarId = userDto.CarId
             };
+
+            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(user, user.Password, request.Password);
+
+            if (user.Username != request.Username || passwordVerificationResult == PasswordVerificationResult.Failed)
+            {
+                return StatusCode(403, "Wrong username or password");
+            }
 
             var response = _authenticationService.Authenticate(user);
 

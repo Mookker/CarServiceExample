@@ -1,15 +1,16 @@
-using System;
-using System.Threading.Tasks;
-using System.Linq;
 using AutoMapper;
 using CarService.Users.Api.Cqrs.Commands;
 using CarService.Users.Api.Cqrs.Queries;
+using CarService.Users.Api.Models.Dtos;
 using CarService.Users.Api.Models.Requests;
 using CarService.Users.Api.Models.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using CarService.Users.Api.Models.Dtos;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CarService.Users.Api.Controllers
 {
@@ -47,6 +48,7 @@ namespace CarService.Users.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateUser([FromBody]CreateUserRequest model)
         {
             var dto = await _mediator.Send(new CreateUserCommand(model.FirstName, model.LastName, model.DoB, model.CarId));
@@ -55,26 +57,39 @@ namespace CarService.Users.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers([FromQuery] Guid carId)
+        public async Task<IActionResult> GetUsers([FromQuery] Guid carId, [FromQuery] string username = null)
         {
-            var dtoList = await _mediator.Send(new GetAllUsersQuery());
             IEnumerable<UserResponse> response;
-            
-            if (carId == Guid.Empty)
+
+            if (carId == Guid.Empty && string.IsNullOrWhiteSpace(username))
             {
-                response = dtoList.Select(dto => _mapper.Map<UserResponse>(dto));
+                var userDtos = await _mediator.Send(new GetAllUsersQuery());
+                response = userDtos.Select(dto => _mapper.Map<UserDto, UserResponse>(dto));
+            }
+            else if (!string.IsNullOrWhiteSpace(username))
+            {
+                var userDto = await _mediator.Send(new GetUserByUsernameQuery() { Username = username });
+
+                if (userDto == null)
+                {
+                    return NotFound("User doesn't exist");
+                }
+
+                var userResponse = _mapper.Map<UserDto, UserResponse>(userDto);
+                response = new List<UserResponse> { userResponse };
             }
             else
             {
-                response = dtoList
-                    .Select(dto => _mapper.Map<UserResponse>(dto))
-                    .Where(dto => dto.CarId == carId);
+                var userDto = await _mediator.Send(new GetUserByCarIdQuery(carId));
+                var userResponse = _mapper.Map<UserDto, UserResponse>(userDto);
+                response = new List<UserResponse> { userResponse };
             }
 
             return Ok(response);
         }
 
         [HttpDelete("{userId}")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeleteUser(Guid userId)
         {
             if (userId == Guid.Empty)

@@ -1,5 +1,9 @@
+using CarService.Authentication.Interfaces;
+using CarService.Authentication.Services;
 using CarService.Users.Api.Configurations;
+using CarService.Users.Api.Cqrs.Queries.Handlers;
 using CarService.Users.Api.Interfaces;
+using CarService.Users.Api.Models.Domain;
 using CarService.Users.Api.Repositories;
 using Dapper.Extensions.PostgreSql;
 using MediatR;
@@ -7,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,7 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-namespace CarService.Users.Api
+namespace CarService.Authentication
 {
     public class Startup
     {
@@ -30,14 +35,18 @@ namespace CarService.Users.Api
         {
             services.AddDapperForPostgreSQL();
             services.AddScoped<IUsersRepository, UsersRepository>();
-            services.AddSingleton<ITokenConfiguration, TokenConfiguration>();
-            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddSingleton<Interfaces.ITokenConfiguration, TokenConfiguration>();
+            services.AddScoped<ITokenGenerator, TokenGenerator>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "CarService.Users.Api", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarService.Authentication", Version = "v1" });
             });
-            services.AddMediatR(typeof(Startup));
+
+            services.AddMediatR(typeof(GetUserByUsernameQueryHandler));
 
             var tokenConfiguration = new TokenConfiguration(Configuration);
             var authPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
@@ -61,16 +70,19 @@ namespace CarService.Users.Api
 
             services.AddAuthorization(auth => auth.AddPolicy("Baerer", authPolicy));
 
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CarService.Users.Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CarService.Authentication v1"));
             }
 
             app.UseAuthentication();
@@ -79,7 +91,10 @@ namespace CarService.Users.Api
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

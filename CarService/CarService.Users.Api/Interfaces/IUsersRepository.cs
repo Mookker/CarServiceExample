@@ -13,5 +13,6 @@ namespace CarService.Users.Api.Interfaces
         Task Update(User user);
         Task Delete(Guid userId);
         Task<User> GetByCarId(Guid carId);
+        Task<User> GetByUsername(string username);
     }
 }

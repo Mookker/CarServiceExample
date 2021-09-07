@@ -1,11 +1,11 @@
-using System;
-using System.Threading.Tasks;
 using AutoMapper;
 using CarService.AppCore.Interfaces;
 using CarService.AppCore.Models.Requests;
-using CarService.RepariOrders.Api.Models.Requests;
 using CarService.RepariOrders.Api.Models.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace CarService.RepariOrders.Api.Controllers
 {
@@ -62,6 +62,7 @@ namespace CarService.RepariOrders.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> CreateRepairOrder([FromBody] CreateRepairOrderRequest request)
         {
             if (request == null)

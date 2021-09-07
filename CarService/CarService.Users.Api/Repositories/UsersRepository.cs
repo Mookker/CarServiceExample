@@ -64,5 +64,13 @@ namespace CarService.Users.Api.Repositories
 
             return _dapper.QueryFirstOrDefaultAsync<User>(query, id);
         }
+
+        public Task<User> GetByUsername(string username)
+        {
+            var name = new { Username = username };
+            string query = $@"SELECT * FROM users WHERE ""Username"" = @Username";
+
+            return _dapper.QueryFirstOrDefaultAsync<User>(query, name);
+        }
     }
 }

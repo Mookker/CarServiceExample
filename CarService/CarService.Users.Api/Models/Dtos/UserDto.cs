@@ -10,7 +10,7 @@ namespace CarService.Users.Api.Models.Dtos
             _ = user ?? throw new ArgumentNullException(nameof(user));
             Id = user.Id;
             Username = user.Username;
-            Password = user.Password;
+            PasswordHash = user.PasswordHash;
             Roles = user.Roles;
             FirstName = user.FirstName;
             LastName = user.LastName;
@@ -20,7 +20,7 @@ namespace CarService.Users.Api.Models.Dtos
 
         public Guid Id { get; init; }
         public string Username { get; set; }
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         public string[] Roles { get; set; }
         public string FirstName { get; init; }
         public string LastName { get; init; }

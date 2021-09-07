@@ -46,7 +46,7 @@ namespace CarService.Authentication.Controllers
             {
                 Id = userDto.Id,
                 Username = userDto.Username,
-                Password = userDto.Password,
+                PasswordHash = userDto.PasswordHash,
                 Roles = userDto.Roles,
                 FirstName = userDto.FirstName,
                 LastName = userDto.LastName,
@@ -54,11 +54,11 @@ namespace CarService.Authentication.Controllers
                 CarId = userDto.CarId
             };
 
-            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(user, user.Password, request.Password);
+            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
 
             if (user.Username != request.Username || passwordVerificationResult == PasswordVerificationResult.Failed)
             {
-                return StatusCode(403, "Wrong username or password");
+                return Forbid();
             }
 
             var response = _authenticationService.Authenticate(user);

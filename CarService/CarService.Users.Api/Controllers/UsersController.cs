@@ -59,12 +59,12 @@ namespace CarService.Users.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery] Guid carId, [FromQuery] string username = null)
         {
+            IEnumerable<UserResponse> response;
+
             if (carId == Guid.Empty && string.IsNullOrWhiteSpace(username))
             {
                 var userDtos = await _mediator.Send(new GetAllUsersQuery());
-                var usersResponse = userDtos.Select(dto => _mapper.Map<UserDto, UserResponse>(dto));
-
-                return Ok(usersResponse);
+                response = userDtos.Select(dto => _mapper.Map<UserDto, UserResponse>(dto));
             }
             else if (!string.IsNullOrWhiteSpace(username))
             {
@@ -75,14 +75,17 @@ namespace CarService.Users.Api.Controllers
                     return NotFound("User doesn't exist");
                 }
 
-                return Ok(_mapper.Map<UserDto, UserResponse>(userDto));
+                var userResponse = _mapper.Map<UserDto, UserResponse>(userDto);
+                response = new List<UserResponse> { userResponse };
             }
             else
             {
                 var userDto = await _mediator.Send(new GetUserByCarIdQuery(carId));
-
-                return Ok(_mapper.Map<UserDto, UserResponse>(userDto));
+                var userResponse = _mapper.Map<UserDto, UserResponse>(userDto);
+                response = new List<UserResponse> { userResponse };
             }
+
+            return Ok(response);
         }
 
         [HttpDelete("{userId}")]

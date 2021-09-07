@@ -7,13 +7,17 @@ using CarService.Users.Api.Models.Domain;
 using CarService.Users.Api.Repositories;
 using Dapper.Extensions.PostgreSql;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace CarService.Authentication
 {
@@ -43,6 +47,28 @@ namespace CarService.Authentication
             });
 
             services.AddMediatR(typeof(GetUserByUsernameQueryHandler));
+
+            var tokenConfiguration = new TokenConfiguration(Configuration);
+            var authPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+               .RequireAuthenticatedUser()
+               .Build();
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters.ValidateIssuer = true;
+                o.TokenValidationParameters.ValidIssuer = tokenConfiguration.Issuer;
+                o.TokenValidationParameters.ValidateIssuerSigningKey = true;
+                o.TokenValidationParameters.IssuerSigningKey =
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfiguration.Secret));
+                o.TokenValidationParameters.ValidateAudience = false;
+                o.TokenValidationParameters.ValidateLifetime = true;
+            });
+
+            services.AddAuthorization(auth => auth.AddPolicy("Baerer", authPolicy));
 
             services.AddCors();
         }

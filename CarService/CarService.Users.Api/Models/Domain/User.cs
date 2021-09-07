@@ -6,7 +6,7 @@ namespace CarService.Users.Api.Models.Domain
     {
         public Guid Id { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         public string[] Roles { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,7 +18,7 @@ namespace CarService.Users.Api.Models.Domain
             return obj is User user &&
                    Id.Equals(user.Id) &&
                    Username == user.Username &&
-                   Password == user.Password &&
+                   PasswordHash == user.PasswordHash &&
                    FirstName == user.FirstName &&
                    LastName == user.LastName &&
                    DoB == user.DoB &&
@@ -27,7 +27,7 @@ namespace CarService.Users.Api.Models.Domain
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Username, Password, FirstName, LastName, DoB, CarId);
+            return HashCode.Combine(Id, Username, PasswordHash, FirstName, LastName, DoB, CarId);
         }
     }
 }
